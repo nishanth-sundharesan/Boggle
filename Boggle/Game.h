@@ -18,5 +18,6 @@ void searchForWords();
 void printBoard();
 void printWords();
 void resetGame();
+void shuffleCharArray(char8_t **charArray);
 
 #undef extern

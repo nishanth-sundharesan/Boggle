@@ -1,17 +1,26 @@
-
 #define GAME_CPP
 
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
 #include <time.h>
+#include <string.h>
 #include <windows.h>
+#include <assert.h>
 
 #include "types.h"
 #include "Boggle.h"
 #include "Dictionary.h"
 #include "Dice.h"
 #include "Game.h"
+
+#if BIG_BOGGLE
+char8_t* boggleBoard[NUM_DICE] = { DIE1 , DIE2 , DIE3 , DIE4 , DIE5 , DIE6 , DIE7, DIE8 , DIE9 , DIE10 , DIE11 , DIE12 , DIE13 , DIE14 , DIE15, DIE16 , DIE17 , DIE18 , DIE19 , DIE20 , DIE21 , DIE22 , DIE23 , DIE24 , DIE25 };
+#else
+char8_t boggleBoard[NUM_DICE][SIDES_IN_DICE + 1] = { DIE1 , DIE2 , DIE3 , DIE4 , DIE5 , DIE6 , DIE7, DIE8 , DIE9 , DIE10 , DIE11 , DIE12 , DIE13 , DIE14 , DIE15, DIE16 };
+#endif
+
+char8_t displayedBoggleBoard[NUM_DICE];
 
 void resetGame()
 {
@@ -22,16 +31,20 @@ void initGame()
 
 }
 void buildRandomBoard()
-{
-
+{	
+	shuffleCharArray(boggleBoard);
 }
 
 void printBoard()
 {
 #if DEBUG_PRINTING_ON
-
+	for (int i = 0; i < NUM_DICE; i++)
+	{
+		printf("%c\n", displayedBoggleBoard[i]);
+	}
 #endif
 }
+
 void printWords()
 {
 #if DEBUG_PRINTING_ON
@@ -52,7 +65,51 @@ void searchForWords()
 
 int32_t rangedRandom(int32_t min, int32_t max)
 {
-	return 0;
+	return (rand() % (max - min)) + min;
+
+	//min is inclusive
+	//max is exclusive
+}
+
+void shuffleCharArray(char8_t **charArray)
+{
+	char8_t tempCharacter;
+	char8_t* tempPointer;
+	int randomNumber;
+	for (int i = 0; i < NUM_DICE; i++)
+	{
+		randomNumber = rangedRandom(0, SIDES_IN_DICE);
+		assert(randomNumber != SIDES_IN_DICE);
+
+		displayedBoggleBoard[i] = charArray[i][randomNumber];
+
+		/*for (int j = 0; j < SIDES_IN_DICE; j++)
+		{
+			randomNumber = rangedRandom(0, SIDES_IN_DICE);
+			assert(randomNumber != SIDES_IN_DICE);
+
+			tempCharacter = charArray[i][j];
+			charArray[i][j] = charArray[i][randomNumber];
+			charArray[i][randomNumber] = tempCharacter;
+		}*/
+
+		/*randomNumber = rangedRandom(0, NUM_DICE);
+		assert(randomNumber != NUM_DICE);
+
+		tempPointer = charArray[i];
+		charArray[i] = charArray[randomNumber];
+		charArray[randomNumber] = tempPointer;*/
+	}
+
+	for (int i = 0; i < NUM_DICE; i++)
+	{
+		randomNumber = rangedRandom(0, NUM_DICE);
+		assert(randomNumber != NUM_DICE);
+
+		tempCharacter = displayedBoggleBoard[i];
+		displayedBoggleBoard[i] = displayedBoggleBoard[randomNumber];
+		displayedBoggleBoard[randomNumber] = tempCharacter;
+	}
 }
 
 
