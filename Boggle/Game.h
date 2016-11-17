@@ -2,16 +2,14 @@
 #define extern 
 #endif
 
-
-struct wordList
+struct WordList
 {
 	char8_t *word;
-	struct wordList *nextWord;
+	struct WordList *nextWord;
 };
-typedef struct wordList wordListT;
+typedef struct WordList wordListT;
 
 extern wordListT *topOfWordList;
-
 
 void initGame();
 void buildRandomBoard();

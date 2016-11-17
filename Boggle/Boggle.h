@@ -9,7 +9,7 @@
 #define NUM_ROWS 4
 #define NUM_COLS 4
 #endif
-#define NUM_DICE (NUM_ROWS*NUM_COLS)
+#define NUM_DICE (NUM_ROWS * NUM_COLS)
 #define MAX_WORDS_FOUND 200
 
 
@@ -17,7 +17,7 @@
 #define NUM_GAMES_TO_AVERAGE 1000
 #define DEBUG_PRINTING_ON 1
 #define AVERAGE_PRINTING_ON 1
-//number of columns for your words
+//Number of columns for your words
 #define PRINT_COLUMNS 8
 
 

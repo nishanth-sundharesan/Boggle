@@ -10,8 +10,8 @@
 #include "types.h"
 #include "Boggle.h"
 #include "Dictionary.h"
-#include "dice.h"
-#include "game.h"
+#include "Dice.h"
+#include "Game.h"
 
 void resetGame()
 {
@@ -20,7 +20,7 @@ void resetGame()
 void initGame()
 {
 
-}						
+}
 void buildRandomBoard()
 {
 
@@ -42,12 +42,12 @@ void printWords()
 
 void searchForWords()
 {
-	//just taking some time here to make sure the timer is working properly
-	float j=0.0f;
-	for(int i=0;i<100000;++i)
-		j+=((float)rand())/100000.0f;
+	//Just taking some time here to make sure the timer is working properly
+	float j = 0.0f;
+	for (int i = 0; i < 100000; ++i)
+		j += ((float)rand()) / 100000.0f;
 
-	printf("j=%f",j);
+	printf("j=%f", j);
 }
 
 int32_t rangedRandom(int32_t min, int32_t max)

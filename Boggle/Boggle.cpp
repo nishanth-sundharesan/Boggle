@@ -9,10 +9,8 @@
 #include "types.h"
 #include "Boggle.h"
 #include "Dictionary.h"
-#include "dice.h"
-#include "game.h"
-
-
+#include "Dice.h"
+#include "Game.h"
 
 int32_t main(int32_t argc, char8_t *argv[])
 {
@@ -25,7 +23,7 @@ int32_t main(int32_t argc, char8_t *argv[])
 #if !INPUT_NEEDED_TO_CONTINUE
 	float_t timeToAverage[NUM_GAMES_TO_AVERAGE];
 #endif
-	// get the high resolution counter's accuracy
+	//Get the high resolution counter's accuracy
 	QueryPerformanceFrequency(&ticksPerSecond);
 
 	srand((unsigned int)time(&t));

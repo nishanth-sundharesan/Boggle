@@ -7,7 +7,7 @@
 #include "types.h"
 #include "Dictionary.h"
 #include "Boggle.h"
-#include "game.h"
+#include "Game.h"
 
 
 void parseDictionaryFile(char8_t *filename, int32_t *numWords)
