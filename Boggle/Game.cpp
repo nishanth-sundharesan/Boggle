@@ -32,16 +32,17 @@ void initGame()
 }
 void buildRandomBoard()
 {	
-	shuffleCharArray(boggleBoard);
+	generateRandomCharacters(boggleBoard);
+	shuffleCharacterArray();
 }
 
 void printBoard()
 {
 #if DEBUG_PRINTING_ON
-	for (int i = 0; i < NUM_DICE; i++)
+	/*for (int i = 0; i < NUM_DICE; i++)
 	{
 		printf("%c\n", displayedBoggleBoard[i]);
-	}
+	}*/
 #endif
 }
 
@@ -71,35 +72,22 @@ int32_t rangedRandom(int32_t min, int32_t max)
 	//max is exclusive
 }
 
-void shuffleCharArray(char8_t **charArray)
-{
-	char8_t tempCharacter;
-	char8_t* tempPointer;
+void generateRandomCharacters(char8_t **boggleBoard)
+{		
 	int randomNumber;
 	for (int i = 0; i < NUM_DICE; i++)
 	{
 		randomNumber = rangedRandom(0, SIDES_IN_DICE);
 		assert(randomNumber != SIDES_IN_DICE);
 
-		displayedBoggleBoard[i] = charArray[i][randomNumber];
-
-		/*for (int j = 0; j < SIDES_IN_DICE; j++)
-		{
-			randomNumber = rangedRandom(0, SIDES_IN_DICE);
-			assert(randomNumber != SIDES_IN_DICE);
-
-			tempCharacter = charArray[i][j];
-			charArray[i][j] = charArray[i][randomNumber];
-			charArray[i][randomNumber] = tempCharacter;
-		}*/
-
-		/*randomNumber = rangedRandom(0, NUM_DICE);
-		assert(randomNumber != NUM_DICE);
-
-		tempPointer = charArray[i];
-		charArray[i] = charArray[randomNumber];
-		charArray[randomNumber] = tempPointer;*/
+		displayedBoggleBoard[i] = boggleBoard[i][randomNumber];
 	}
+}
+
+void shuffleCharacterArray()
+{
+	char8_t tempCharacter;	
+	int randomNumber;
 
 	for (int i = 0; i < NUM_DICE; i++)
 	{
