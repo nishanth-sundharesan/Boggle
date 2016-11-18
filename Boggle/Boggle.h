@@ -13,7 +13,7 @@
 #define NUM_DICE (NUM_ROWS * NUM_COLS)
 #define MAX_WORDS_FOUND 200
 
-
+#define FILENAME_DICTIONARY "../AppData/Dictionary.txt"
 #define INPUT_NEEDED_TO_CONTINUE 1
 #define NUM_GAMES_TO_AVERAGE 1000
 #define DEBUG_PRINTING_ON 1
