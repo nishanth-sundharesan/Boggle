@@ -11,6 +11,7 @@
 #include "Dictionary.h"
 #include "Dice.h"
 #include "Game.h"
+#include "Trie.h"
 
 int32_t main(int32_t argc, char8_t *argv[])
 {
@@ -29,7 +30,8 @@ int32_t main(int32_t argc, char8_t *argv[])
 	srand((unsigned int)time(&t));
 
 	//	topOfWordList = NULL;
-	parseDictionaryFile(fileName, &numberOfWords);
+	Trie* root;
+	parseDictionaryFile(fileName, &numberOfWords,&root);
 	bool8_t done = false;
 	int32_t gameCounter = 0;
 
@@ -41,7 +43,7 @@ int32_t main(int32_t argc, char8_t *argv[])
 		printBoard();
 #endif
 		QueryPerformanceCounter(&startTime);
-		searchForWords();
+		searchForWords(root);
 		QueryPerformanceCounter(&endTime);
 		elapsedTime.QuadPart = endTime.QuadPart - startTime.QuadPart;
 		float_t timeInMilliseconds = 1000.0f* ((float_t)elapsedTime.QuadPart / (float_t)ticksPerSecond.QuadPart);

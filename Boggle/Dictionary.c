@@ -11,7 +11,7 @@
 #include "Game.h"
 #include "Trie.h"
 
-void parseDictionaryFile(char8_t *fileName, int32_t *numberOfWords)
+void parseDictionaryFile(char8_t *fileName, int32_t *numberOfWords,Trie** root)
 {
 	FILE *dictionaryDataToRead = NULL;
 
@@ -19,21 +19,17 @@ void parseDictionaryFile(char8_t *fileName, int32_t *numberOfWords)
 	assert(errorNumber == 0);
 
 	char8_t readLine[MAX_CHARS_IN_DICTIONARY_WORD];
-	Trie* root;
-	CreateTrieRootNode(&root);
+	//Trie* root;
+	CreateTrieRootNode(root);
 
 	while (fgets(readLine, 100, dictionaryDataToRead) != NULL)
-	{
-		
-		//if (readLine[0] == 'A' && strlen(readLine) > 4)
+	{				
 		if (strlen(readLine) > 4)
 		{
-
-			AddTrieNode(readLine, root);
-			//break;
+			AddTrieNode(readLine, *root);	
 		}
 	}
-	PrintTrie(root);
+	//PrintTrie(*root);
 
 
 	fclose(dictionaryDataToRead);
