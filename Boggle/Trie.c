@@ -6,9 +6,9 @@
 #include "types.h"
 #include "Trie.h"
 
-void AddTrieNode(char8_t *word, Trie* mainRoot)
+void AddTrieNode(char8_t *word, Trie* root)
 {
-	Trie* root = mainRoot;
+	//Trie* root = mainRoot;
 
 	//printf("%s\n", word);
 	//while (*word != '\n' && *word != '\0')
@@ -32,6 +32,7 @@ void AddTrieNode(char8_t *word, Trie* mainRoot)
 				node->children = NULL;
 				node->next = NULL;
 				node->hasWordEnded = false;
+				node->parent = root;
 
 				root->children = node;
 
@@ -40,6 +41,7 @@ void AddTrieNode(char8_t *word, Trie* mainRoot)
 			else
 			{
 				root = root->children;
+				Trie* parentNode = root;
 
 				if (root->character == *word)
 				{
@@ -47,7 +49,7 @@ void AddTrieNode(char8_t *word, Trie* mainRoot)
 				}
 				else
 				{
-					while (root->next != NULL)
+					while (root->next != NULL && root->character != *word)
 					{
 						root = root->next;
 					}
@@ -59,6 +61,7 @@ void AddTrieNode(char8_t *word, Trie* mainRoot)
 						node->children = NULL;
 						node->next = NULL;
 						node->hasWordEnded = false;
+						node->parent = parentNode;
 
 						root->next = node;
 						root = node;
@@ -77,6 +80,7 @@ void CreateTrieRootNode(Trie** root)
 	(*root)->character = '\0';
 	(*root)->next = NULL;
 	(*root)->children = NULL;
+	(*root)->parent = NULL;
 }
 
 void PrintTrie(Trie* mainRoot)
