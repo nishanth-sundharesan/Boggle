@@ -21,7 +21,7 @@ void resetGame();
 void generateRandomCharacters(char8_t **charArray);
 void shuffleCharacterArray();
 
-void searchWordsForTheLetter(int row, int col, Trie* root);
+void searchWordsForTheLetter(int row, int col, Trie** root);
 bool isChildNode(Trie *root);
 void addLetter(char8_t character);
 void clearWords();

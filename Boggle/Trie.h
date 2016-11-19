@@ -8,6 +8,7 @@ struct TrieStruct
 	char8_t character;
 	struct TrieStruct *next, *children, *parent;
 	bool8_t hasWordEnded;
+	bool8_t hasWordPrinted;
 };
 
 //next is linked list

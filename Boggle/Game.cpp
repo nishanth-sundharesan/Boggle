@@ -23,7 +23,7 @@ char8_t boggleBoard[NUM_DICE][SIDES_IN_DICE + 1] = { DIE1 , DIE2 , DIE3 , DIE4 ,
 
 char8_t displayedBoggleBoard[NUM_DICE];
 
-char8_t tempBoggleBoard[4][4] = { {'A','B','C','D'},{'E','F','G','H'},{ 'I','J','K','L' },{ 'E','F','G','H' } };
+char8_t tempBoggleBoard[4][4] = { {'A','B','C','D'},{'E','F','G','H'},{ 'I','J','K','L' },{ 'M','N','O','P' } };
 int length = 4;
 
 
@@ -74,21 +74,20 @@ void printWords()
 void searchForWords(Trie* root)
 {
 	//Just taking some time here to make sure the timer is working properly
-	/*float j = 0.0f;
-	for (int i = 0; i < 100000; ++i)
-		j += ((float)rand()) / 100000.0f;
+	/*float m = 0.0f;
+	for (int n = 0; n < 100000; ++n)
+		m += ((float)rand()) / 100000.0f;
 
-	printf("j=%f", j);
+	printf("m=%f", m);
 */
-
-	for (int i = 0; i < length; i++)
+	root = root->children;
+	Trie** mainRoot = &root;
+	/*for (int i = 0; i < length; i++)
 	{
 		for (int j = 0; j < length; j++)
-		{
-			root = root->children;
-
-
-
+		{*/
+			int i = 1;
+			int j = 1;
 			if (tempBoggleBoard[i][j] == root->character)
 			{
 				addLetter(tempBoggleBoard[i][j]);
@@ -97,7 +96,7 @@ void searchForWords(Trie* root)
 					printTheWord();
 				}
 
-				root = root->children;				
+				root = root->children;
 			}
 			else
 			{
@@ -120,18 +119,22 @@ void searchForWords(Trie* root)
 				}
 			}
 
-			searchWordsForTheLetter(i, j, root);
-			//searchWordsForTheLetter(i, j, root);
-			break;
+			searchWordsForTheLetter(i, j, &root);
+			//break;
 			clearWords();
-		}
-	}
+			root = *mainRoot;
+	/*	}
+	}*/
 
 }
 
-void searchWordsForTheLetter(int row, int col, Trie* root)
-{
+bool isParented = false;
 
+void searchWordsForTheLetter(int row, int col, Trie** root)
+{
+	bool isLinkAccessed = false;
+
+	bool hasLoopPrinted = false;
 
 	for (int i = row - 1; i <= row + 1; i++)
 	{
@@ -147,24 +150,33 @@ void searchWordsForTheLetter(int row, int col, Trie* root)
 						continue;
 					}
 
-					if (tempBoggleBoard[i][j] == root->character)
+					if (tempBoggleBoard[i][j] == (*root)->character)
 					{
+						hasLoopPrinted = true;
 						addLetter(tempBoggleBoard[i][j]);
-						if (root->hasWordEnded)
+						if ((*root)->hasWordEnded && (!(*root)->hasWordPrinted))
+						//if ((*root)->hasWordEnded)
 						{
+							(*root)->hasWordPrinted = true;
 							printTheWord();
 						}
 
-						if (root->children == NULL)
+						if ((*root)->children == NULL)
 						{
 							//Can write better here
-							if (root->next == NULL)
+							if ((*root)->next == NULL)
 							{
-								root = root->parent;
 								removeLetter();
-								if (isChildNode(root))
+								if (isChildNode((*root)))
 								{
+									(*root) = (*root)->parent;
+									removeLetter();
+									isParented = true;
 									return;
+								}
+								else
+								{
+									(*root) = (*root)->parent;
 								}
 								//Check if it is a linked node or child node, if child node, only then you can return
 								//No need to check additional conditions while returning
@@ -172,60 +184,84 @@ void searchWordsForTheLetter(int row, int col, Trie* root)
 							}
 							else
 							{
-								root = root->next;
+								(*root) = (*root)->next;
 								removeLetter();
 								//return;
 							}
 						}
 						else
 						{
-							root = root->children;
-							searchWordsForTheLetter(i, j, root);
+							(*root) = (*root)->children;
+							searchWordsForTheLetter(i, j, (root));
 						}
 					}
 					else
 					{
-						if (root->next != NULL)
+						if ((*root)->next != NULL)
 						{
-							Trie* temp = root;
+							Trie* temp = (*root);
 
-							while (root->next != NULL && root->character != tempBoggleBoard[i][j])
+							while ((*root)->next != NULL && (*root)->character != tempBoggleBoard[i][j])
 							{
-								root = root->next;
+								if (hasLoopPrinted)
+								{
+									isLinkAccessed = true;
+								}
+								(*root) = (*root)->next;
 							}
 
-							if (root->character == tempBoggleBoard[i][j])
+							if ((*root)->character == tempBoggleBoard[i][j])
 							{
-								addLetter(tempBoggleBoard[i][j]);
-								if (root->hasWordEnded)
+								hasLoopPrinted = true;
+
+								if (isParented)
 								{
+									//removeLetter();
+									isLinkAccessed = false;
+									isParented = false;
+								}
+								//removeLetter();
+								addLetter(tempBoggleBoard[i][j]);
+								if ((*root)->hasWordEnded && (!(*root)->hasWordPrinted))
+								//if ((*root)->hasWordEnded )
+								{
+									(*root)->hasWordPrinted = true;
 									printTheWord();
 								}
 
-								if (root->children == NULL)
+								if ((*root)->children == NULL)
 								{
-									if (root->next == NULL)
+									if ((*root)->next == NULL)
 									{
-										root = root->parent;
 										removeLetter();
-										//return;
+										if (isChildNode((*root)))
+										{
+											removeLetter();
+											(*root) = (*root)->parent;
+											isParented = true;
+											return;
+										}
+										else
+										{
+											(*root) = (*root)->parent;
+										}
 									}
 									else
 									{
-										root = root->next;
+										(*root) = (*root)->next;
 										removeLetter();
 										//return;
 									}
 								}
 								else
 								{
-									root = root->children;
-									searchWordsForTheLetter(i, j, root);
+									(*root) = (*root)->children;
+									searchWordsForTheLetter(i, j, (root));
 								}
 							}
 							else
 							{
-								root = temp;
+								(*root) = temp;
 							}
 						}
 					}
@@ -235,32 +271,22 @@ void searchWordsForTheLetter(int row, int col, Trie* root)
 	}
 
 	//Setting proper parent node
-
-	if (isChildNode(root))
+	if (isChildNode((*root)))
 	{
-		root = root->parent;
+		(*root) = (*root)->parent;
+
 	}
 	else
 	{
-		root = root->parent->parent;
+		(*root) = (*root)->parent->parent;
 	}
-	/*if (root->parent->children != NULL)
-	{
-		if (root->parent->children->character == root->character)
-		{
-			root = root->parent;
-		}
-		else
-		{
-			root = root->parent->parent;
-		}
-	}
-	else
-	{
-		root = root->parent->parent;
-	}*/
-
 	removeLetter();
+
+	/*if (hasLoopPrinted)
+	{
+		removeLetter();
+	}*/
+	isParented = true;
 }
 
 bool isChildNode(Trie *root)
@@ -295,7 +321,7 @@ void printTheWord()
 	wordsFound[k] = '\0';
 	printf("%s\n", wordsFound);
 
-	k = 0;
+	//k--;
 }
 
 int32_t rangedRandom(int32_t min, int32_t max)
