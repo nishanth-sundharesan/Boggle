@@ -74,20 +74,20 @@ void printWords()
 void searchForWords(Trie* root)
 {
 	//Just taking some time here to make sure the timer is working properly
-	/*float m = 0.0f;
+	float m = 0.0f;
 	for (int n = 0; n < 100000; ++n)
 		m += ((float)rand()) / 100000.0f;
 
 	printf("m=%f", m);
-*/
+
 	root = root->children;
 	Trie** mainRoot = &root;
-	/*for (int i = 0; i < length; i++)
+	for (int i = 0; i < length; i++)
 	{
 		for (int j = 0; j < length; j++)
-		{*/
-			int i = 1;
-			int j = 1;
+		{
+			/*int i = 1;
+			int j = 1;*/
 			if (tempBoggleBoard[i][j] == root->character)
 			{
 				addLetter(tempBoggleBoard[i][j]);
@@ -123,8 +123,8 @@ void searchForWords(Trie* root)
 			//break;
 			clearWords();
 			root = *mainRoot;
-	/*	}
-	}*/
+		}
+	}
 
 }
 
@@ -155,7 +155,7 @@ void searchWordsForTheLetter(int row, int col, Trie** root)
 						hasLoopPrinted = true;
 						addLetter(tempBoggleBoard[i][j]);
 						if ((*root)->hasWordEnded && (!(*root)->hasWordPrinted))
-						//if ((*root)->hasWordEnded)
+							//if ((*root)->hasWordEnded)
 						{
 							(*root)->hasWordPrinted = true;
 							printTheWord();
@@ -167,7 +167,7 @@ void searchWordsForTheLetter(int row, int col, Trie** root)
 							if ((*root)->next == NULL)
 							{
 								removeLetter();
-								if (isChildNode((*root)))
+								if ((*root)->isChildNode)
 								{
 									(*root) = (*root)->parent;
 									removeLetter();
@@ -223,7 +223,7 @@ void searchWordsForTheLetter(int row, int col, Trie** root)
 								//removeLetter();
 								addLetter(tempBoggleBoard[i][j]);
 								if ((*root)->hasWordEnded && (!(*root)->hasWordPrinted))
-								//if ((*root)->hasWordEnded )
+									//if ((*root)->hasWordEnded )
 								{
 									(*root)->hasWordPrinted = true;
 									printTheWord();
@@ -234,7 +234,7 @@ void searchWordsForTheLetter(int row, int col, Trie** root)
 									if ((*root)->next == NULL)
 									{
 										removeLetter();
-										if (isChildNode((*root)))
+										if ((*root)->isChildNode)
 										{
 											removeLetter();
 											(*root) = (*root)->parent;
@@ -271,7 +271,7 @@ void searchWordsForTheLetter(int row, int col, Trie** root)
 	}
 
 	//Setting proper parent node
-	if (isChildNode((*root)))
+	if ((*root)->isChildNode)
 	{
 		(*root) = (*root)->parent;
 
@@ -289,17 +289,17 @@ void searchWordsForTheLetter(int row, int col, Trie** root)
 	isParented = true;
 }
 
-bool isChildNode(Trie *root)
-{
-	if (root->parent->children != NULL && root->parent->children->character == root->character)
-	{
-		return true;
-	}
-	else
-	{
-		return false;
-	}
-}
+//bool isChildNode(Trie *root)
+//{
+//	if (root->parent->children != NULL && root->parent->children->character == root->character)
+//	{
+//		return true;
+//	}
+//	else
+//	{
+//		return false;
+//	}
+//}
 
 void addLetter(char8_t character)
 {

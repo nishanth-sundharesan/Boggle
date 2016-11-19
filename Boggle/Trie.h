@@ -9,6 +9,7 @@ struct TrieStruct
 	struct TrieStruct *next, *children, *parent;
 	bool8_t hasWordEnded;
 	bool8_t hasWordPrinted;
+	bool8_t isChildNode;
 };
 
 //next is linked list

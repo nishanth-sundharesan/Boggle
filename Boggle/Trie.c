@@ -34,6 +34,7 @@ void AddTrieNode(char8_t *word, Trie* root)
 				node->hasWordEnded = false;
 				node->parent = root;
 				node->hasWordPrinted = false;
+				node->isChildNode = true;
 
 				root->children = node;
 
@@ -64,6 +65,7 @@ void AddTrieNode(char8_t *word, Trie* root)
 						node->hasWordEnded = false;
 						node->parent = parentNode;
 						node->hasWordPrinted = false;
+						node->isChildNode = false;
 
 						root->next = node;
 						root = node;
