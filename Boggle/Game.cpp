@@ -23,10 +23,16 @@ char8_t boggleBoard[NUM_DICE][SIDES_IN_DICE + 1] = { DIE1 , DIE2 , DIE3 , DIE4 ,
 
 char8_t displayedBoggleBoard[NUM_DICE];
 
-char8_t tempBoggleBoard[4][4] = { {'A','B','C','D'},{'E','F','G','H'},{ 'I','J','K','L' },{ 'M','N','O','P' } };
-//char8_t tempBoggleBoard[4][4] = { { 'A','B','C','D' },{ 'E','F','G','H' },{ 'A','B','C','D' },{ 'E','F','G','H' } };
-bool8_t lettersVisited[4][4] = { {false,false,false,false},{ false,false,false,false },{ false,false,false,false },{ false,false,false,false } };
-int length = 4;
+const int length = 4;
+//char8_t tempBoggleBoard[length][length] = { {'A','B','C','D'},{ 'A','B','C','D' },{ 'E','F','G','H' },{ 'E','F','G','H' } };
+//char8_t tempBoggleBoard[length][length] = { {'A','B','C','D'},{ 'E','F','G','H' },{ 'I','J','K','L' },{ 'M','N','O','P' } };
+//char8_t tempBoggleBoard[length][length] = { { 'A','B','C','D' },{ 'E','F','G','H' },{ 'A','B','C','D' },{ 'E','F','G','H' } };
+//char8_t tempBoggleBoard[length][length] = { { 'P','D','J','K' },{ 'A','B','C','D' },{ 'E','F','G','H' },{ 'S','T','M','A' } };
+char8_t tempBoggleBoard[length][length] = { { 'P','D','J','K' },{ 'A','S','E','I' },{ 'U','R','N','L' },{ 'S','T','M','A' } };
+//char8_t tempBoggleBoard[length][length] = { { 'P','D','J','K','C' },{ 'A','S','E','I','O' },{ 'U','R','N','L','F' },{ 'S','T','M','A','S' } };
+bool8_t lettersVisited[length][length] = { {false,false,false,false},{ false,false,false,false },{ false,false,false,false },{ false,false,false,false } };
+//bool8_t lettersVisited[length][length] = { { false,false,false,false,false },{ false,false,false,false,false },{ false,false,false,false,false },{ false,false,false,false,false } };
+
 
 
 char8_t wordsFound[MAX_CHARS_IN_DICTIONARY_WORD];
@@ -88,8 +94,8 @@ void searchForWords(Trie* root)
 	{
 		for (int j = 0; j < length; j++)
 		{
-			/*int i = 3;
-			int j = 3;*/
+		/*int i = 1;
+		int j = 2;*/
 			lettersVisited[i][j] = true;
 			if (tempBoggleBoard[i][j] == root->character)
 			{
@@ -170,7 +176,11 @@ void searchWordsForTheLetter(int row, int col, Trie** root)
 								if ((*root)->isChildNode)
 								{
 									(*root) = (*root)->parent;
-									removeLetter();									
+									if (!(*root)->isChildNode)
+									{
+										(*root) = (*root)->parent;
+									}
+									removeLetter();
 
 									//lettersVisited[i][j] = false;
 									return;
@@ -178,6 +188,10 @@ void searchWordsForTheLetter(int row, int col, Trie** root)
 								else
 								{
 									(*root) = (*root)->parent;
+									/*if (!(*root)->isChildNode)
+									{
+										(*root) = (*root)->parent;
+									}*/
 								}
 								//Check if it is a linked node or child node, if child node, only then you can return
 								//No need to check additional conditions while returning
@@ -185,7 +199,8 @@ void searchWordsForTheLetter(int row, int col, Trie** root)
 							}
 							else
 							{
-								(*root) = (*root)->next;
+								//(*root) = (*root)->next;
+								//(*root) = temp;
 								removeLetter();
 							}
 						}
@@ -209,7 +224,7 @@ void searchWordsForTheLetter(int row, int col, Trie** root)
 							}
 
 							if ((*root)->character == tempBoggleBoard[i][j])
-							{								
+							{
 								addLetter(tempBoggleBoard[i][j]);
 								if ((*root)->hasWordEnded && (!(*root)->hasWordPrinted))
 								{
@@ -224,18 +239,28 @@ void searchWordsForTheLetter(int row, int col, Trie** root)
 										removeLetter();
 										if ((*root)->isChildNode)
 										{
+											printf("Insideeeeeeeee-------------------------------");
 											removeLetter();
-											(*root) = (*root)->parent;											
+											(*root) = (*root)->parent;
+											if (!(*root)->isChildNode)
+											{
+												(*root) = (*root)->parent;
+											}
 											return;
 										}
 										else
 										{
 											(*root) = (*root)->parent;
+											/*	if (!(*root)->isChildNode)
+												{
+													(*root) = (*root)->parent;
+												}*/
 										}
 									}
 									else
 									{
-										(*root) = (*root)->next;
+										//(*root) = (*root)->next;
+										(*root) = temp;
 										removeLetter();
 									}
 								}
@@ -262,13 +287,23 @@ void searchWordsForTheLetter(int row, int col, Trie** root)
 	if ((*root)->isChildNode)
 	{
 		(*root) = (*root)->parent;
+		//while (!(*root)->isChildNode)		
+		if (!(*root)->isChildNode)
+		{
+			(*root) = (*root)->parent;
+		}
 
 	}
 	else
 	{
 		(*root) = (*root)->parent->parent;
+		//while (!(*root)->isChildNode)
+		/*if (!(*root)->isChildNode)
+		{
+			(*root) = (*root)->parent;
+		}*/
 	}
-	removeLetter();	
+	removeLetter();
 }
 
 void addLetter(char8_t character)

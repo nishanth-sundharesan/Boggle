@@ -24,7 +24,7 @@ void parseDictionaryFile(char8_t *fileName, int32_t *numberOfWords,Trie** root)
 
 	while (fgets(readLine, 100, dictionaryDataToRead) != NULL)
 	{				
-		if (strlen(readLine) > 3)
+		if (strlen(readLine) > 4)
 		{
 			AddTrieNode(readLine, *root);	
 		}

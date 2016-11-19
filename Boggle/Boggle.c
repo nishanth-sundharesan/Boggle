@@ -5,6 +5,7 @@
 #include <string.h>
 #include <time.h>
 #include <windows.h>
+#include <string.h>
 
 #include "types.h"
 #include "Boggle.h"
