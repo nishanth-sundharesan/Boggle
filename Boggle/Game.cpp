@@ -154,8 +154,7 @@ void searchWordsForTheLetter(int row, int col, Trie** root)
 					{
 						hasLoopPrinted = true;
 						addLetter(tempBoggleBoard[i][j]);
-						if ((*root)->hasWordEnded && (!(*root)->hasWordPrinted))
-							//if ((*root)->hasWordEnded)
+						if ((*root)->hasWordEnded && (!(*root)->hasWordPrinted))							
 						{
 							(*root)->hasWordPrinted = true;
 							printTheWord();
@@ -185,8 +184,7 @@ void searchWordsForTheLetter(int row, int col, Trie** root)
 							else
 							{
 								(*root) = (*root)->next;
-								removeLetter();
-								//return;
+								removeLetter();								
 							}
 						}
 						else
@@ -215,15 +213,12 @@ void searchWordsForTheLetter(int row, int col, Trie** root)
 								hasLoopPrinted = true;
 
 								if (isParented)
-								{
-									//removeLetter();
+								{									
 									isLinkAccessed = false;
 									isParented = false;
-								}
-								//removeLetter();
+								}								
 								addLetter(tempBoggleBoard[i][j]);
-								if ((*root)->hasWordEnded && (!(*root)->hasWordPrinted))
-									//if ((*root)->hasWordEnded )
+								if ((*root)->hasWordEnded && (!(*root)->hasWordPrinted))									
 								{
 									(*root)->hasWordPrinted = true;
 									printTheWord();
@@ -249,8 +244,7 @@ void searchWordsForTheLetter(int row, int col, Trie** root)
 									else
 									{
 										(*root) = (*root)->next;
-										removeLetter();
-										//return;
+										removeLetter();										
 									}
 								}
 								else
