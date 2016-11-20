@@ -18,10 +18,10 @@
 #if BIG_BOGGLE
 char8_t* boggleBoard[NUM_DICE] = { DIE1 , DIE2 , DIE3 , DIE4 , DIE5 , DIE6 , DIE7, DIE8 , DIE9 , DIE10 , DIE11 , DIE12 , DIE13 , DIE14 , DIE15, DIE16 , DIE17 , DIE18 , DIE19 , DIE20 , DIE21 , DIE22 , DIE23 , DIE24 , DIE25 };
 #else
-char8_t boggleBoard[NUM_DICE][SIDES_IN_DICE + 1] = { DIE1 , DIE2 , DIE3 , DIE4 , DIE5 , DIE6 , DIE7, DIE8 , DIE9 , DIE10 , DIE11 , DIE12 , DIE13 , DIE14 , DIE15, DIE16 };
+char8_t* boggleBoard[NUM_DICE] = { DIE1 , DIE2 , DIE3 , DIE4 , DIE5 , DIE6 , DIE7, DIE8 , DIE9 , DIE10 , DIE11 , DIE12 , DIE13 , DIE14 , DIE15, DIE16 };
 #endif
 
-char8_t displayedBoggleBoard[NUM_DICE];
+char8_t displayedBoggleBoard[NUM_ROWS][NUM_COLS];
 
 const int length = 4;
 //char8_t tempBoggleBoard[length][length] = { {'A','B','C','D'},{ 'A','B','C','D' },{ 'E','F','G','H' },{ 'E','F','G','H' } };
@@ -48,26 +48,21 @@ void initGame()
 }
 void buildRandomBoard()
 {
-	generateRandomCharacters(boggleBoard);
-	shuffleCharacterArray();
-
-	for (int i = 0; i < length; i++)
-	{
-		for (int j = 0; j < length; j++)
-		{
-			printf("%c ", tempBoggleBoard[i][j]);
-		}
-		printf("\n");
-	}
+	generateRandomCharacters(boggleBoard, &displayedBoggleBoard[0][0]);
+	shuffleCharacterArray(&displayedBoggleBoard[0][0]);	
 }
 
 void printBoard()
 {
 #if DEBUG_PRINTING_ON
-	/*for (int i = 0; i < NUM_DICE; i++)
+	for (int i = 0; i < NUM_ROWS; i++)
 	{
-		printf("%c\n", displayedBoggleBoard[i]);
-	}*/
+		for (int j = 0; j < NUM_COLS; j++)
+		{
+			printf("%c ", displayedBoggleBoard[i][j]);
+		}
+		printf("\n");
+	}
 #endif
 }
 
@@ -94,8 +89,8 @@ void searchForWords(Trie* root)
 	{
 		for (int j = 0; j < length; j++)
 		{
-		/*int i = 1;
-		int j = 2;*/
+			/*int i = 1;
+			int j = 2;*/
 			lettersVisited[i][j] = true;
 			if (tempBoggleBoard[i][j] == root->character)
 			{
@@ -129,7 +124,6 @@ void searchForWords(Trie* root)
 			}
 
 			searchWordsForTheLetter(i, j, &root);
-			//break;
 			clearWords();
 			root = mainRoot;
 			clearAllVsitedNodes();
@@ -182,25 +176,15 @@ void searchWordsForTheLetter(int row, int col, Trie** root)
 									}
 									removeLetter();
 
-									//lettersVisited[i][j] = false;
 									return;
 								}
 								else
 								{
 									(*root) = (*root)->parent;
-									/*if (!(*root)->isChildNode)
-									{
-										(*root) = (*root)->parent;
-									}*/
 								}
-								//Check if it is a linked node or child node, if child node, only then you can return
-								//No need to check additional conditions while returning
-								//return;
 							}
 							else
 							{
-								//(*root) = (*root)->next;
-								//(*root) = temp;
 								removeLetter();
 							}
 						}
@@ -251,15 +235,10 @@ void searchWordsForTheLetter(int row, int col, Trie** root)
 										else
 										{
 											(*root) = (*root)->parent;
-											/*	if (!(*root)->isChildNode)
-												{
-													(*root) = (*root)->parent;
-												}*/
 										}
 									}
 									else
 									{
-										//(*root) = (*root)->next;
 										(*root) = temp;
 										removeLetter();
 									}
@@ -287,21 +266,14 @@ void searchWordsForTheLetter(int row, int col, Trie** root)
 	if ((*root)->isChildNode)
 	{
 		(*root) = (*root)->parent;
-		//while (!(*root)->isChildNode)		
 		if (!(*root)->isChildNode)
 		{
 			(*root) = (*root)->parent;
 		}
-
 	}
 	else
 	{
 		(*root) = (*root)->parent->parent;
-		//while (!(*root)->isChildNode)
-		/*if (!(*root)->isChildNode)
-		{
-			(*root) = (*root)->parent;
-		}*/
 	}
 	removeLetter();
 }
@@ -324,9 +296,7 @@ void removeLetter()
 void printTheWord()
 {
 	wordsFound[k] = '\0';
-	printf("%s\n", wordsFound);
-
-	//k--;
+	printf("%s\n", wordsFound);	
 }
 
 void clearAllVsitedNodes()
@@ -348,19 +318,19 @@ int32_t rangedRandom(int32_t min, int32_t max)
 	//max is exclusive
 }
 
-void generateRandomCharacters(char8_t **boggleBoard)
+void generateRandomCharacters(char8_t **boggleBoard, char8_t *displayedBoggleBoard)
 {
 	int randomNumber;
 	for (int i = 0; i < NUM_DICE; i++)
 	{
 		randomNumber = rangedRandom(0, SIDES_IN_DICE);
-		assert(randomNumber != SIDES_IN_DICE);
+		assert(randomNumber >= 0 && randomNumber < SIDES_IN_DICE);
 
 		displayedBoggleBoard[i] = boggleBoard[i][randomNumber];
 	}
 }
 
-void shuffleCharacterArray()
+void shuffleCharacterArray(char8_t *displayedBoggleBoard)
 {
 	char8_t tempCharacter;
 	int randomNumber;
@@ -368,7 +338,7 @@ void shuffleCharacterArray()
 	for (int i = 0; i < NUM_DICE; i++)
 	{
 		randomNumber = rangedRandom(0, NUM_DICE);
-		assert(randomNumber != NUM_DICE);
+		assert(randomNumber >= 0 && randomNumber < NUM_DICE);
 
 		tempCharacter = displayedBoggleBoard[i];
 		displayedBoggleBoard[i] = displayedBoggleBoard[randomNumber];

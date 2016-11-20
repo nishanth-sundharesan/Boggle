@@ -4,12 +4,12 @@
 #define TRIE
 
 struct TrieStruct
-{
+{	
 	char8_t character;
-	struct TrieStruct *next, *children, *parent;
 	bool8_t hasWordEnded;
 	bool8_t hasWordPrinted;
 	bool8_t isChildNode;
+	struct TrieStruct *next, *children, *parent;	
 };
 
 //next is linked list

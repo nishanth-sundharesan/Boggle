@@ -18,8 +18,8 @@ void searchForWords(Trie* root);
 void printBoard();
 void printWords();
 void resetGame();
-void generateRandomCharacters(char8_t **charArray);
-void shuffleCharacterArray();
+void generateRandomCharacters(char8_t **charArray, char8_t *displayedBoggleBoard);
+void shuffleCharacterArray(char8_t *displayedBoggleBoard);
 
 void searchWordsForTheLetter(int row, int col, Trie** root);
 void clearAllVsitedNodes();
