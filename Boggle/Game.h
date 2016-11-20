@@ -22,10 +22,11 @@ void generateRandomCharacters(char8_t **charArray, char8_t *displayedBoggleBoard
 void shuffleCharacterArray(char8_t *displayedBoggleBoard);
 
 void searchWordsForTheLetter(int row, int col, Trie** root);
-void clearAllVsitedNodes();
+void clearAllVisitedNodes();
 void addLetter(char8_t character);
 void clearWords();
 void removeLetter();
 void printTheWord();
+void addLetterPrintWord(char8_t character, Trie** root);
 
 #undef extern

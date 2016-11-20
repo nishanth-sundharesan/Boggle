@@ -42,10 +42,12 @@ void resetGame()
 {
 
 }
+
 void initGame()
 {
 
 }
+
 void buildRandomBoard()
 {
 	generateRandomCharacters(boggleDices, &boggleBoard[0][0]);
@@ -76,7 +78,6 @@ void printWords()
 #endif
 }
 
-
 void searchForWords(Trie* root)
 {
 	//Just taking some time here to make sure the timer is working properly
@@ -94,45 +95,40 @@ void searchForWords(Trie* root)
 		{
 			/*int i = 1;
 			int j = 2;*/
-			lettersVisited[i][j] = true;
 			if (tempBoggleBoard[i][j] == root->character)
 			{
-				addLetter(tempBoggleBoard[i][j]);
-				if (root->hasWordEnded)
-				{
-					printTheWord();
-				}
-
+				addLetterPrintWord(tempBoggleBoard[i][j], &root);
+				lettersVisited[i][j] = true;
 				root = root->children;
 			}
-			else
+			else if (root->next != NULL)
 			{
-				if (root->next != NULL)
+				while (root->next != NULL && root->character != tempBoggleBoard[i][j])
 				{
-					while (root->next != NULL && root->character != tempBoggleBoard[i][j])
-					{
-						root = root->next;
-					}
-
-					if (root->character == tempBoggleBoard[i][j])
-					{
-						addLetter(tempBoggleBoard[i][j]);
-						if (root->hasWordEnded)
-						{
-							printTheWord();
-						}
-						root = root->children;
-					}
+					root = root->next;
+				}
+				if (root->character == tempBoggleBoard[i][j])
+				{
+					addLetterPrintWord(tempBoggleBoard[i][j], &root);
+					lettersVisited[i][j] = true;
+					root = root->children;
+				}
+				else
+				{
+					root = NULL;
 				}
 			}
 
-			searchWordsForTheLetter(i, j, &root);
+			if (root != NULL && mainRoot != root)
+			{
+				searchWordsForTheLetter(i, j, &root);
+			}
 			clearWords();
 			root = mainRoot;
-			clearAllVsitedNodes();
+			clearAllVisitedNodes();
 		}
 	}
-
+	root = mainRoot->parent;
 }
 
 void searchWordsForTheLetter(int row, int col, Trie** root)
@@ -152,13 +148,7 @@ void searchWordsForTheLetter(int row, int col, Trie** root)
 
 					if (tempBoggleBoard[i][j] == (*root)->character)
 					{
-						addLetter(tempBoggleBoard[i][j]);
-						if ((*root)->hasWordEnded && (!(*root)->hasWordPrinted))
-						{
-							(*root)->hasWordPrinted = true;
-							printTheWord();
-						}
-
+						addLetterPrintWord(tempBoggleBoard[i][j], root);
 						if ((*root)->children == NULL)
 						{
 							removeLetter();
@@ -190,8 +180,6 @@ void searchWordsForTheLetter(int row, int col, Trie** root)
 					}
 					else if ((*root)->next != NULL)
 					{
-						//Trie* temp = (*root);
-
 						while ((*root)->next != NULL && (*root)->character != tempBoggleBoard[i][j])
 						{
 							(*root) = (*root)->next;
@@ -199,17 +187,11 @@ void searchWordsForTheLetter(int row, int col, Trie** root)
 
 						if ((*root)->character == tempBoggleBoard[i][j])
 						{
-							addLetter(tempBoggleBoard[i][j]);
-							if ((*root)->hasWordEnded && (!(*root)->hasWordPrinted))
-							{
-								(*root)->hasWordPrinted = true;
-								printTheWord();
-							}
-
+							addLetterPrintWord(tempBoggleBoard[i][j], root);
 							if ((*root)->children == NULL)
 							{
 								removeLetter();
-								(*root) = (*root)->parent;								
+								(*root) = (*root)->parent;
 							}
 							else
 							{
@@ -245,6 +227,18 @@ void searchWordsForTheLetter(int row, int col, Trie** root)
 	removeLetter();
 }
 
+void addLetterPrintWord(char8_t character, Trie** root)
+{	
+	wordsFound[k++] = character;
+
+	if ((*root)->hasWordEnded && (!(*root)->hasWordPrinted))
+	{
+		(*root)->hasWordPrinted = true;
+		wordsFound[k] = '\0';
+		printf("\n%s", wordsFound);
+	}
+}
+
 void addLetter(char8_t character)
 {
 	wordsFound[k++] = character;
@@ -263,14 +257,14 @@ void removeLetter()
 void printTheWord()
 {
 	wordsFound[k] = '\0';
-	printf("%s\n", wordsFound);
+	printf("\n%s", wordsFound);
 }
 
-void clearAllVsitedNodes()
+void clearAllVisitedNodes()
 {
-	for (int i = 0; i < length; i++)
+	for (int i = 0; i < NUM_ROWS; i++)
 	{
-		for (int j = 0; j < length; j++)
+		for (int j = 0; j < NUM_COLS; j++)
 		{
 			lettersVisited[i][j] = false;
 		}
