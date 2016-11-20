@@ -188,65 +188,40 @@ void searchWordsForTheLetter(int row, int col, Trie** root)
 							lettersVisited[i][j] = false;
 						}
 					}
-					else
+					else if ((*root)->next != NULL)
 					{
-						if ((*root)->next != NULL)
-						{
-							Trie* temp = (*root);
+						//Trie* temp = (*root);
 
-							while ((*root)->next != NULL && (*root)->character != tempBoggleBoard[i][j])
+						while ((*root)->next != NULL && (*root)->character != tempBoggleBoard[i][j])
+						{
+							(*root) = (*root)->next;
+						}
+
+						if ((*root)->character == tempBoggleBoard[i][j])
+						{
+							addLetter(tempBoggleBoard[i][j]);
+							if ((*root)->hasWordEnded && (!(*root)->hasWordPrinted))
 							{
-								(*root) = (*root)->next;
+								(*root)->hasWordPrinted = true;
+								printTheWord();
 							}
 
-							if ((*root)->character == tempBoggleBoard[i][j])
+							if ((*root)->children == NULL)
 							{
-								addLetter(tempBoggleBoard[i][j]);
-								if ((*root)->hasWordEnded && (!(*root)->hasWordPrinted))
-								{
-									(*root)->hasWordPrinted = true;
-									printTheWord();
-								}
-
-								if ((*root)->children == NULL)
-								{
-									if ((*root)->next == NULL)
-									{
-										removeLetter();
-										/*if ((*root)->isChildNode)
-										{
-											printf("Insideeeeeeeee-------------------------------");
-											removeLetter();
-											(*root) = (*root)->parent;
-											if (!(*root)->isChildNode)
-											{
-												(*root) = (*root)->parent;
-											}
-											return;
-										}
-										else
-										{*/
-											(*root) = (*root)->parent;
-										//}
-									}
-									else
-									{
-										(*root) = temp;
-										removeLetter();
-									}
-								}
-								else
-								{
-									(*root) = (*root)->children;
-									lettersVisited[i][j] = true;
-									searchWordsForTheLetter(i, j, (root));
-									lettersVisited[i][j] = false;
-								}
+								removeLetter();
+								(*root) = (*root)->parent;								
 							}
 							else
 							{
-								(*root) = temp;
+								(*root) = (*root)->children;
+								lettersVisited[i][j] = true;
+								searchWordsForTheLetter(i, j, (root));
+								lettersVisited[i][j] = false;
 							}
+						}
+						else
+						{
+							(*root) = (*root)->parent;
 						}
 					}
 				}
