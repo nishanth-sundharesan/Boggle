@@ -2,6 +2,9 @@
 #define MAX_LINE MAX_CHARS_IN_DICTIONARY_WORD
 #define BIG_BOGGLE 1
 #define SIDES_IN_DICE 6
+#define START_CHAR 'A'
+#define END_CHAR 'Z'
+#define MAX_CHARS_IN_A_WORD 4
 
 #if BIG_BOGGLE
 #define NUM_ROWS 5

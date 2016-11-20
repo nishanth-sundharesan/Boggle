@@ -31,9 +31,8 @@ int32_t main(int32_t argc, char8_t *argv[])
 	srand((unsigned int)time(&t));
 
 	//	topOfWordList = NULL;
-	Trie* root;
-	parseDictionaryFile(fileName, &numberOfWords,&root);
-	bool8_t done = false;
+	Trie* root;	
+	bool8_t done = parseDictionaryFile(fileName, &numberOfWords, &root);
 	int32_t gameCounter = 0;
 
 	while (!done)

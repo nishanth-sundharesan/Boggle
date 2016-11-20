@@ -6,12 +6,8 @@
 #include "types.h"
 #include "Trie.h"
 
-void AddTrieNode(char8_t *word, Trie* root)
+void addTrieNodes(char8_t *word, Trie* root)
 {
-	//Trie* root = mainRoot;
-
-	//printf("%s\n", word);
-	//while (*word != '\n' && *word != '\0')
 	while (true)
 	{
 		if (*word == '\n' || *word == '\0')
@@ -20,74 +16,66 @@ void AddTrieNode(char8_t *word, Trie* root)
 			break;
 		}
 
-		assert(*word != '\n');
-		assert(*word != '\0');
-
-		if (*word >= 'A' && *word <= 'Z')
+		if (root->children == NULL)
 		{
-			if (root->children == NULL)
+			Trie* node = createEmptyNode(*word);
+
+			node->isChildNode = true;
+			node->parent = root;
+
+			root->children = node;
+			root = node;
+		}
+		else
+		{
+			root = root->children;
+			Trie* parentNode = root;
+
+			if (root->character != *word)
 			{
-				Trie* node = (Trie *)malloc(sizeof(Trie));
-				node->character = *word;
-				node->children = NULL;
-				node->next = NULL;
-				node->hasWordEnded = false;
-				node->parent = root;
-				node->hasWordPrinted = false;
-				node->isChildNode = true;
-
-				root->children = node;
-
-				root = node;
-			}
-			else
-			{
-				root = root->children;
-				Trie* parentNode = root;
-
-				if (root->character == *word)
+				while (root->next != NULL && root->character != *word)
 				{
-					//root = root->children;
+					root = root->next;
 				}
-				else
+
+				if (root->character != *word)
 				{
-					while (root->next != NULL && root->character != *word)
-					{
-						root = root->next;
-					}
+					Trie* node = createEmptyNode(*word);
 
-					if (root->character != *word)
-					{
-						Trie* node = (Trie *)malloc(sizeof(Trie));
-						node->character = *word;
-						node->children = NULL;
-						node->next = NULL;
-						node->hasWordEnded = false;
-						node->parent = parentNode;
-						node->hasWordPrinted = false;
-						node->isChildNode = false;
+					node->isChildNode = false;
+					node->parent = parentNode;
 
-						root->next = node;
-						root = node;
-					}
+					root->next = node;
+					root = node;
 				}
 			}
 		}
 		word++;
-		//printf("%c", *(word++));
 	}
 }
 
-void CreateTrieRootNode(Trie** root)
+Trie* createEmptyNode(char8_t letter)
 {
-	*root = (Trie *)malloc(sizeof(Trie));
-	(*root)->character = '\0';
-	(*root)->next = NULL;
-	(*root)->children = NULL;
+	Trie* node = (Trie *)malloc(sizeof(Trie));
+	assert(node != NULL);
+
+	node->character = letter;
+	node->children = NULL;
+	node->next = NULL;
+	node->hasWordEnded = false;
+	node->hasWordPrinted = false;
+
+	return node;
+}
+
+void createTrieRootNode(Trie** root)
+{
+	*root = createEmptyNode('\0');
+	(*root)->isChildNode = true;
 	(*root)->parent = NULL;
 }
 
-void PrintTrie(Trie* mainRoot)
+void printTrie(Trie* mainRoot)
 {
 	mainRoot = mainRoot->children;
 	printf("%c\n", mainRoot->character);

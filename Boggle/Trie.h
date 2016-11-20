@@ -18,6 +18,7 @@ typedef struct TrieStruct Trie;
 
 #endif
 
-void CreateTrieRootNode(Trie** root);
-void AddTrieNode(char8_t *word, Trie* root);
-void PrintTrie(Trie* mainRoot);
+void createTrieRootNode(Trie** root);
+void addTrieNodes(char8_t *word, Trie* root);
+void printTrie(Trie* mainRoot);
+Trie* createEmptyNode(char8_t letter);
