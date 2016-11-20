@@ -16,12 +16,12 @@
 #include "Trie.h"
 
 #if BIG_BOGGLE
-char8_t* boggleBoard[NUM_DICE] = { DIE1 , DIE2 , DIE3 , DIE4 , DIE5 , DIE6 , DIE7, DIE8 , DIE9 , DIE10 , DIE11 , DIE12 , DIE13 , DIE14 , DIE15, DIE16 , DIE17 , DIE18 , DIE19 , DIE20 , DIE21 , DIE22 , DIE23 , DIE24 , DIE25 };
+char8_t* boggleDices[NUM_DICE] = { DIE1 , DIE2 , DIE3 , DIE4 , DIE5 , DIE6 , DIE7, DIE8 , DIE9 , DIE10 , DIE11 , DIE12 , DIE13 , DIE14 , DIE15, DIE16 , DIE17 , DIE18 , DIE19 , DIE20 , DIE21 , DIE22 , DIE23 , DIE24 , DIE25 };
 #else
-char8_t* boggleBoard[NUM_DICE] = { DIE1 , DIE2 , DIE3 , DIE4 , DIE5 , DIE6 , DIE7, DIE8 , DIE9 , DIE10 , DIE11 , DIE12 , DIE13 , DIE14 , DIE15, DIE16 };
+char8_t* boggleDices[NUM_DICE] = { DIE1 , DIE2 , DIE3 , DIE4 , DIE5 , DIE6 , DIE7, DIE8 , DIE9 , DIE10 , DIE11 , DIE12 , DIE13 , DIE14 , DIE15, DIE16 };
 #endif
 
-char8_t displayedBoggleBoard[NUM_ROWS][NUM_COLS];
+char8_t boggleBoard[NUM_ROWS][NUM_COLS];
 
 const int length = 4;
 //char8_t tempBoggleBoard[length][length] = { {'A','B','C','D'},{ 'A','B','C','D' },{ 'E','F','G','H' },{ 'E','F','G','H' } };
@@ -48,21 +48,24 @@ void initGame()
 }
 void buildRandomBoard()
 {
-	generateRandomCharacters(boggleBoard, &displayedBoggleBoard[0][0]);
-	shuffleCharacterArray(&displayedBoggleBoard[0][0]);	
+	generateRandomCharacters(boggleDices, &boggleBoard[0][0]);
+	shuffleCharacterArray(&boggleBoard[0][0]);
 }
 
 void printBoard()
 {
 #if DEBUG_PRINTING_ON
+	printf("======Boggle Board======\n\n");
 	for (int i = 0; i < NUM_ROWS; i++)
 	{
+		printf("\t");
 		for (int j = 0; j < NUM_COLS; j++)
 		{
-			printf("%c ", displayedBoggleBoard[i][j]);
+			printf("%c ", boggleBoard[i][j]);
 		}
 		printf("\n");
 	}
+	printf("\n========================\n");
 #endif
 }
 
@@ -147,11 +150,6 @@ void searchWordsForTheLetter(int row, int col, Trie** root)
 						continue;
 					}
 
-					if (i == row && j == col)
-					{
-						continue;
-					}
-
 					if (tempBoggleBoard[i][j] == (*root)->character)
 					{
 						addLetter(tempBoggleBoard[i][j]);
@@ -163,10 +161,9 @@ void searchWordsForTheLetter(int row, int col, Trie** root)
 
 						if ((*root)->children == NULL)
 						{
-							//Can write better here
+							removeLetter();
 							if ((*root)->next == NULL)
 							{
-								removeLetter();
 								if ((*root)->isChildNode)
 								{
 									(*root) = (*root)->parent;
@@ -175,17 +172,12 @@ void searchWordsForTheLetter(int row, int col, Trie** root)
 										(*root) = (*root)->parent;
 									}
 									removeLetter();
-
 									return;
 								}
 								else
 								{
 									(*root) = (*root)->parent;
 								}
-							}
-							else
-							{
-								removeLetter();
 							}
 						}
 						else
@@ -221,7 +213,7 @@ void searchWordsForTheLetter(int row, int col, Trie** root)
 									if ((*root)->next == NULL)
 									{
 										removeLetter();
-										if ((*root)->isChildNode)
+										/*if ((*root)->isChildNode)
 										{
 											printf("Insideeeeeeeee-------------------------------");
 											removeLetter();
@@ -233,9 +225,9 @@ void searchWordsForTheLetter(int row, int col, Trie** root)
 											return;
 										}
 										else
-										{
+										{*/
 											(*root) = (*root)->parent;
-										}
+										//}
 									}
 									else
 									{
@@ -296,7 +288,7 @@ void removeLetter()
 void printTheWord()
 {
 	wordsFound[k] = '\0';
-	printf("%s\n", wordsFound);	
+	printf("%s\n", wordsFound);
 }
 
 void clearAllVsitedNodes()
