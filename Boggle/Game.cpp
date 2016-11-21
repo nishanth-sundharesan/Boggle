@@ -7,6 +7,7 @@
 #include <string.h>
 #include <windows.h>
 #include <assert.h>
+#include <stdlib.h> 
 
 #include "types.h"
 #include "Boggle.h"
@@ -29,18 +30,27 @@ const int length = 4;
 //char8_t tempBoggleBoard[length][length] = { { 'A','B','C','D' },{ 'E','F','G','H' },{ 'A','B','C','D' },{ 'E','F','G','H' } };
 //char8_t tempBoggleBoard[length][length] = { { 'P','D','J','K' },{ 'A','B','C','D' },{ 'E','F','G','H' },{ 'S','T','M','A' } };
 char8_t tempBoggleBoard[length][length] = { { 'P','D','J','K' },{ 'A','S','E','I' },{ 'U','R','N','L' },{ 'S','T','M','A' } };
-//char8_t tempBoggleBoard[length][length] = { { 'P','D','J','K','C' },{ 'A','S','E','I','O' },{ 'U','R','N','L','F' },{ 'S','T','M','A','S' } };
+//char8_t tempBoggleBoard[length][length] = { { 'Q','A','S','D','F' },{ 'I','K','L','M','N' },{ 'H','L','O','P','R' },{ 'Z','X','C','V','U' },{ 'H','E','R','E','I' } };
 bool8_t lettersVisited[length][length] = { {false,false,false,false},{ false,false,false,false },{ false,false,false,false },{ false,false,false,false } };
 //bool8_t lettersVisited[length][length] = { { false,false,false,false,false },{ false,false,false,false,false },{ false,false,false,false,false },{ false,false,false,false,false } };
 
 
-
-char8_t wordsFound[MAX_CHARS_IN_DICTIONARY_WORD];
-int k = 0;
+char8_t* wordsFound[MAX_WORDS_FOUND];
+char8_t lettersFound[MAX_CHARS_IN_DICTIONARY_WORD];
+Trie* printedNodes[MAX_WORDS_FOUND];
+uint16_t letterIndex = 0;
+uint16_t wordIndex = 0;
 
 void resetGame()
 {
+	//Work on this
+	//clearLetters();
 
+	for (int i = 0; i < wordIndex; i++)
+	{
+		printedNodes[i]->hasWordPrinted = false;
+	}
+	clearWords();
 }
 
 void initGame()
@@ -73,8 +83,21 @@ void printBoard()
 
 void printWords()
 {
-#if DEBUG_PRINTING_ON
+#if DEBUG_PRINTING_ON	
+	printf("\n\n\n=====Words Found=====");
 
+	if (wordIndex == 0)
+	{
+		printf("\nNo Words Found");
+	}
+	else
+	{
+		for (int i = 0; i < wordIndex; i++)
+		{
+			printf("\n%s", wordsFound[i]);
+		}
+	}
+	printf("\n=====================");
 #endif
 }
 
@@ -123,7 +146,7 @@ void searchForWords(Trie* root)
 			{
 				searchWordsForTheLetter(i, j, &root);
 			}
-			clearWords();
+			clearLetters();
 			root = mainRoot;
 			clearAllVisitedNodes();
 		}
@@ -228,36 +251,36 @@ void searchWordsForTheLetter(int row, int col, Trie** root)
 }
 
 void addLetterPrintWord(char8_t character, Trie** root)
-{	
-	wordsFound[k++] = character;
+{
+	lettersFound[letterIndex++] = character;
 
 	if ((*root)->hasWordEnded && (!(*root)->hasWordPrinted))
 	{
 		(*root)->hasWordPrinted = true;
-		wordsFound[k] = '\0';
-		printf("\n%s", wordsFound);
+		lettersFound[letterIndex] = '\0';
+
+		wordsFound[wordIndex] = (char8_t*)malloc(letterIndex + 1);
+		strcpy_s(wordsFound[wordIndex], letterIndex + 1, lettersFound);
+		printedNodes[wordIndex] = (*root);
+		wordIndex++;
+
+		assert(wordIndex != MAX_WORDS_FOUND);
 	}
 }
 
-void addLetter(char8_t character)
+void clearLetters()
 {
-	wordsFound[k++] = character;
+	letterIndex = 0;
 }
 
 void clearWords()
 {
-	k = 0;
+	wordIndex = 0;
 }
 
 void removeLetter()
 {
-	k--;
-}
-
-void printTheWord()
-{
-	wordsFound[k] = '\0';
-	printf("\n%s", wordsFound);
+	letterIndex--;
 }
 
 void clearAllVisitedNodes()

@@ -23,10 +23,9 @@ void shuffleCharacterArray(char8_t *displayedBoggleBoard);
 
 void searchWordsForTheLetter(int row, int col, Trie** root);
 void clearAllVisitedNodes();
-void addLetter(char8_t character);
-void clearWords();
+void clearLetters();
 void removeLetter();
-void printTheWord();
+void clearWords();
 void addLetterPrintWord(char8_t character, Trie** root);
 
 #undef extern
