@@ -50,6 +50,10 @@ void addTrieNodes(char8_t *word, Trie* root)
 				}
 			}
 		}
+		if (*word == 'Q')
+		{
+			word++;
+		}
 		word++;
 	}
 }

@@ -56,6 +56,11 @@ bool8_t checkIfValidWord(char8_t word[])
 			isValidWord = false;
 			break;
 		}
+		else if ((word[letterCount] == 'Q') && (word[letterCount + 1] != 'U'))
+		{
+			isValidWord = false;
+			break;
+		}
 		letterCount++;
 	}
 

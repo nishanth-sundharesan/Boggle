@@ -24,15 +24,16 @@ char8_t* boggleDices[NUM_DICE] = { DIE1 , DIE2 , DIE3 , DIE4 , DIE5 , DIE6 , DIE
 
 char8_t boggleBoard[NUM_ROWS][NUM_COLS];
 
-const int length = 4;
+const int length = 5;
 //char8_t tempBoggleBoard[length][length] = { {'A','B','C','D'},{ 'A','B','C','D' },{ 'E','F','G','H' },{ 'E','F','G','H' } };
 //char8_t tempBoggleBoard[length][length] = { {'A','B','C','D'},{ 'E','F','G','H' },{ 'I','J','K','L' },{ 'M','N','O','P' } };
 //char8_t tempBoggleBoard[length][length] = { { 'A','B','C','D' },{ 'E','F','G','H' },{ 'A','B','C','D' },{ 'E','F','G','H' } };
 //char8_t tempBoggleBoard[length][length] = { { 'P','D','J','K' },{ 'A','B','C','D' },{ 'E','F','G','H' },{ 'S','T','M','A' } };
-char8_t tempBoggleBoard[length][length] = { { 'P','D','J','K' },{ 'A','S','E','I' },{ 'U','R','N','L' },{ 'S','T','M','A' } };
-//char8_t tempBoggleBoard[length][length] = { { 'Q','A','S','D','F' },{ 'I','K','L','M','N' },{ 'H','L','O','P','R' },{ 'Z','X','C','V','U' },{ 'H','E','R','E','I' } };
-bool8_t lettersVisited[length][length] = { {false,false,false,false},{ false,false,false,false },{ false,false,false,false },{ false,false,false,false } };
-//bool8_t lettersVisited[length][length] = { { false,false,false,false,false },{ false,false,false,false,false },{ false,false,false,false,false },{ false,false,false,false,false } };
+//char8_t tempBoggleBoard[length][length] = { { 'P','D','J','K' },{ 'A','S','E','I' },{ 'U','R','N','L' },{ 'S','T','M','A' } };
+char8_t tempBoggleBoard[length][length] = { { 'Q','A','S','D','F' },{ 'I','K','L','M','N' },{ 'H','L','O','P','R' },{ 'Z','X','C','V','U' },{ 'H','E','R','E','I' } };
+//char8_t tempBoggleBoard[NUM_ROWS][NUM_COLS] = { { 'B','A','S','D','F' },{ 'I','K','L','M','N' },{ 'H','L','O','P','R' },{ 'Z','X','C','V','U' },{ 'H','E','R','E','I' } };
+//bool8_t lettersVisited[length][length] = { {false,false,false,false},{ false,false,false,false },{ false,false,false,false },{ false,false,false,false } };
+bool8_t lettersVisited[NUM_ROWS][NUM_COLS] = { { false,false,false,false,false },{ false,false,false,false,false },{ false,false,false,false,false },{ false,false,false,false,false } };
 
 
 char8_t* wordsFound[MAX_WORDS_FOUND];
@@ -44,7 +45,7 @@ uint16_t wordIndex = 0;
 void resetGame()
 {
 	//Work on this
-	//clearLetters();
+	clearLetters();
 
 	for (int i = 0; i < wordIndex; i++)
 	{
@@ -253,6 +254,10 @@ void searchWordsForTheLetter(int row, int col, Trie** root)
 void addLetterPrintWord(char8_t character, Trie** root)
 {
 	lettersFound[letterIndex++] = character;
+	if (character == 'Q')
+	{
+		lettersFound[letterIndex++] = 'U';
+	}
 
 	if ((*root)->hasWordEnded && (!(*root)->hasWordPrinted))
 	{
@@ -281,6 +286,10 @@ void clearWords()
 void removeLetter()
 {
 	letterIndex--;
+	if (lettersFound[letterIndex] == 'U' && (letterIndex - 1) >= 0 && lettersFound[letterIndex - 1] == 'Q')
+	{
+		letterIndex--;
+	}
 }
 
 void clearAllVisitedNodes()
