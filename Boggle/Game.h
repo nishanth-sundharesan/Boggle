@@ -18,6 +18,7 @@ void searchForWords(Trie* root);
 void printBoard();
 void printWords();
 void resetGame();
+void finalizeGame(Trie** root);
 void generateRandomCharacters(char8_t **charArray, char8_t *displayedBoggleBoard);
 void shuffleCharacterArray(char8_t *displayedBoggleBoard);
 

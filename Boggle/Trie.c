@@ -58,6 +58,53 @@ void addTrieNodes(char8_t *word, Trie* root)
 	}
 }
 
+void deleteTrieNodes(Trie** root)
+{
+	Trie* previousNode;
+	while ((*root) != NULL)
+	{
+		while ((*root)->children != NULL)
+		{
+			(*root) = (*root)->children;
+		}
+
+		while ((*root)->next != NULL)
+		{
+			previousNode = (*root);
+			(*root) = (*root)->next;
+		}
+
+		if ((*root)->children == NULL && (*root)->next == NULL)
+		{
+			if ((*root)->isChildNode)
+			{
+				(*root) = (*root)->parent;
+				if ((*root) != NULL)
+				{
+					free((*root)->children);
+					(*root)->children = NULL;
+				}
+				else
+				{
+					free((*root));
+					break;
+				}
+			}
+			else
+			{
+				(*root) = previousNode;
+				free((*root)->next);
+				(*root)->next = NULL;
+			}
+
+			if (!((*root)->isChildNode) && (*root)->children == NULL && (*root)->next == NULL)
+			{
+				(*root) = (*root)->parent;
+			}
+		}
+	}
+}
+
 Trie* createEmptyNode(char8_t letter)
 {
 	Trie* node = (Trie *)malloc(sizeof(Trie));

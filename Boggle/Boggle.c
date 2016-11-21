@@ -82,5 +82,6 @@ int32_t main(int32_t argc, char8_t *argv[])
 			done = true;
 		}
 #endif
-	}
+	}	
+	finalizeGame(&root);
 }

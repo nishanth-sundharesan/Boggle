@@ -339,4 +339,7 @@ void shuffleCharacterArray(char8_t *displayedBoggleBoard)
 	}
 }
 
-
+void finalizeGame(Trie** root)
+{
+	deleteTrieNodes(root);
+}
