@@ -104,7 +104,14 @@ void deleteTrieNodes(Trie** root)
 		}
 	}
 }
-
+	
+/*	Function: createEmptyNode
+*	-----------------------------------
+*	Description: Creates a Trie node and assigns some default values to the members of the node.
+*	Parameters:
+*				letter = The character to be assigned after creating the node.
+*	Returns:	Returns the pointer to the dynamically created Trie node.
+*/
 Trie* createEmptyNode(char8_t letter)
 {
 	Trie* node = (Trie *)malloc(sizeof(Trie));
@@ -115,7 +122,6 @@ Trie* createEmptyNode(char8_t letter)
 	node->next = NULL;
 	node->hasWordEnded = false;
 	node->hasWordPrinted = false;
-
 	return node;
 }
 
@@ -124,17 +130,4 @@ void createTrieRootNode(Trie** root)
 	*root = createEmptyNode('\0');
 	(*root)->isChildNode = true;
 	(*root)->parent = NULL;
-}
-
-void printTrie(Trie* mainRoot)
-{
-	mainRoot = mainRoot->children;
-	printf("%c\n", mainRoot->character);
-
-	mainRoot = mainRoot->next;
-	while (mainRoot != NULL)
-	{
-		printf("%c\n", mainRoot->character);
-		mainRoot = mainRoot->next;
-	}
 }

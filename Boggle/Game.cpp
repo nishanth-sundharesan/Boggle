@@ -44,14 +44,17 @@ uint16_t wordIndex = 0;
 
 void resetGame()
 {
-	//Work on this
 	clearLetters();
+	resetWordsFound();	
+	clearWords();
+}
 
+void resetWordsFound()
+{
 	for (int i = 0; i < wordIndex; i++)
 	{
 		printedNodes[i]->hasWordPrinted = false;
 	}
-	clearWords();
 }
 
 void initGame()
@@ -103,22 +106,13 @@ void printWords()
 }
 
 void searchForWords(Trie* root)
-{
-	//Just taking some time here to make sure the timer is working properly
-	float m = 0.0f;
-	for (int n = 0; n < 100000; ++n)
-		m += ((float)rand()) / 100000.0f;
-
-	printf("m=%f", m);
-
+{	
 	root = root->children;
 	Trie* mainRoot = root;
 	for (int i = 0; i < length; i++)
 	{
 		for (int j = 0; j < length; j++)
-		{
-			/*int i = 1;
-			int j = 2;*/
+		{			
 			if (tempBoggleBoard[i][j] == root->character)
 			{
 				addLetterPrintWord(tempBoggleBoard[i][j], &root);
@@ -303,12 +297,16 @@ void clearAllVisitedNodes()
 	}
 }
 
+/*	Function: rangedRandom
+*	-----------------------------------
+*	Description: Generates a random number between min and max. Min is inclusive, Max is exclusive.
+*	Parameters:
+*				min = the minimum value of the random number(inclusive).
+*				max = the maximum value of the random number(exclusive).
+*/
 int32_t rangedRandom(int32_t min, int32_t max)
 {
 	return (rand() % (max - min)) + min;
-
-	//min is inclusive
-	//max is exclusive
 }
 
 void generateRandomCharacters(char8_t **boggleBoard, char8_t *displayedBoggleBoard)

@@ -12,14 +12,11 @@ struct TrieStruct
 	struct TrieStruct *next, *children, *parent;	
 };
 
-//next is linked list
-
 typedef struct TrieStruct Trie;
 
 #endif
 
 void createTrieRootNode(Trie** root);
 void addTrieNodes(char8_t *word, Trie* root);
-void printTrie(Trie* mainRoot);
 Trie* createEmptyNode(char8_t letter);
 void deleteTrieNodes(Trie** root);

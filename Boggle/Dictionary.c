@@ -33,8 +33,7 @@ bool8_t parseDictionaryFile(char8_t *fileName, int32_t *numberOfWords, Trie** ro
 		{
 			addTrieNodes(readLine, *root);
 		}
-	}
-	//PrintTrie(*root);
+	}	
 
 	fclose(dictionaryDataToRead);
 	return false;

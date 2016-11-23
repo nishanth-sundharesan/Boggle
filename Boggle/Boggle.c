@@ -49,7 +49,7 @@ int32_t main(int32_t argc, char8_t *argv[])
 		float_t timeInMilliseconds = 1000.0f* ((float_t)elapsedTime.QuadPart / (float_t)ticksPerSecond.QuadPart);
 
 #if DEBUG_PRINTING_ON
-		//printf("\nSearch took %f milliseconds.\n", timeInMilliseconds);
+		printf("\nSearch took %f milliseconds.\n", timeInMilliseconds);
 		printWords();
 #endif
 
