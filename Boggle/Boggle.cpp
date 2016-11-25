@@ -15,8 +15,7 @@
 #include "Trie.h"
 
 int32_t main(int32_t argc, char8_t *argv[])
-{
-	int32_t numberOfWords;
+{	
 	char8_t *fileName = FILENAME_DICTIONARY;
 	time_t t;
 	char8_t inChar = 0x00;
@@ -32,7 +31,7 @@ int32_t main(int32_t argc, char8_t *argv[])
 
 	//	topOfWordList = NULL;
 	Trie* root;	
-	bool8_t done = parseDictionaryFile(fileName, &numberOfWords, &root);
+	bool8_t done = parseDictionaryFile(fileName, &root);
 	int32_t gameCounter = 0;
 
 	while (!done)
@@ -54,7 +53,7 @@ int32_t main(int32_t argc, char8_t *argv[])
 #endif
 
 #if INPUT_NEEDED_TO_CONTINUE
-		//printf("Press q to quit, any other key to continue:");
+		printf("\nPress q to quit, any other key to continue:");
 		scanf_s("%c", &inChar);
 		fflush(stdin);
 		if (inChar == 'q')
@@ -62,7 +61,7 @@ int32_t main(int32_t argc, char8_t *argv[])
 		if (!done)
 			resetGame();
 #else 
-		if (gameCounter < NUM_GAMES_TO_AVERAGE)
+		if (gameCounter < NUM_GAMES_TO_AVERAGE )
 		{
 			timeToAverage[gameCounter++] = (float_t)timeInMilliseconds;
 			resetGame();
@@ -84,4 +83,5 @@ int32_t main(int32_t argc, char8_t *argv[])
 #endif
 	}	
 	finalizeGame(&root);
+	getchar();
 }

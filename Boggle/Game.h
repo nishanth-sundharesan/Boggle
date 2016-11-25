@@ -28,6 +28,7 @@ void clearAllVisitedNodes();
 void clearLetters();
 void removeLetter();
 void clearWords();
+void freeAllFoundWords();
 void addLetterPrintWord(char8_t character, Trie** root);
 
 #undef extern
