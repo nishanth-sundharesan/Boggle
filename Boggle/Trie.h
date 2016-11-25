@@ -1,7 +1,7 @@
 #include "types.h"
 /*******************************************************
 Consider the words: amy, and, emma, rob, roger
-The graphical representation of the Trie data structure for the above mentioned words.
+The graphical representation of the Trie data structure for the above mentioned words looks like.
 
 			\0
 			|
@@ -48,8 +48,7 @@ The graphical representation of the Trie data structure for the above mentioned 
 			b) n = *parent will point to 'm'
 			c) d = *parent will point to 'n'
 
-This data structure was inspired from https://www.cs.bu.edu/teaching/c/tree/trie/
-A detailed explanation is provided in the link. But the data structure used in this program is modified for the given problem.
+A detailed explanation of the data structure is provided in the link https://www.cs.bu.edu/teaching/c/tree/trie/. But the data structure used in this program is modified for the given problem.
 *******************************************************/
 #ifndef TRIE
 #define TRIE

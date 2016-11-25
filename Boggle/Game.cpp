@@ -41,11 +41,11 @@ void resetGame()
 
 /*	Function: resetWordsFound
 *	-----------------------------------
-*	Description: This function resets all the hasWordPrinted boolean for the nodes that have been printed. This is necessary because we need them to be printed for the next iteration if they are found.
+*	Description: This function resets all the hasWordPrinted boolean for the nodes that have been printed. This is necessary because we need them to be printed for the next iteration of the game loop if they are found.
 */
 void resetWordsFound()
 {
-	for (int i = 0; i < wordIndex; i++)
+	for (uint32_t i = 0; i < wordIndex; i++)
 	{
 		printedNodes[i]->hasWordPrinted = false;
 	}
@@ -66,10 +66,10 @@ void printBoard()
 {
 #if DEBUG_PRINTING_ON
 	printf("======Boggle Board======\n\n");
-	for (int i = 0; i < NUM_ROWS; i++)
+	for (uint32_t i = 0; i < NUM_ROWS; i++)
 	{
 		printf("\t");
-		for (int j = 0; j < NUM_COLS; j++)
+		for (uint32_t j = 0; j < NUM_COLS; j++)
 		{
 			printf("%c ", boggleBoard[i][j]);
 		}
@@ -90,7 +90,7 @@ void printWords()
 	}
 	else
 	{
-		for (int i = 0; i < wordIndex; i++)
+		for (uint32_t i = 0; i < wordIndex; i++)
 		{
 			printf("\n%s", wordsFound[i]);
 		}
@@ -109,9 +109,9 @@ void searchForWords(Trie* root)
 {
 	root = root->children;																//Traverse to the root's children
 	Trie* mainRoot = root;																//and save that first child.
-	for (int i = 0; i < NUM_ROWS; i++)													//Loop through the boggle board
+	for (uint32_t i = 0; i < NUM_ROWS; i++)												//Loop through the boggle board
 	{
-		for (int j = 0; j < NUM_COLS; j++)
+		for (uint32_t j = 0; j < NUM_COLS; j++)
 		{
 			if (boggleBoard[i][j] == root->character)									//If the letter in the board matches the node's letter
 			{
@@ -158,13 +158,13 @@ void searchForWords(Trie* root)
 *				col = The column index of the previously found letter.
 *				root = The child node of the previously found node.
 */
-void searchWordsForTheLetter(int row, int col, Trie** root)
+void searchWordsForTheLetter(uint32_t row, uint32_t col, Trie** root)
 {
-	for (int i = row - 1; i <= row + 1; i++)													//Check for all the surrounding letters from the found letter
+	for (uint32_t i = row - 1; i <= row + 1; i++)												//Check for all the surrounding letters from the found letter
 	{
 		if (i >= 0 && i < NUM_ROWS)																//Check if it's a valid row index
 		{
-			for (int j = col - 1; j <= col + 1; j++)											//Check for all the surrounding letters from the found letter
+			for (uint32_t j = col - 1; j <= col + 1; j++)										//Check for all the surrounding letters from the found letter
 			{
 				if (j >= 0 && j < NUM_COLS)														//Check if it's a valid column index
 				{
@@ -205,7 +205,7 @@ void searchWordsForTheLetter(int row, int col, Trie** root)
 							lettersVisited[i][j] = false;										//After returning back from the recursive call, mark the current position as not visited
 						}
 					}
-					else if ((*root)->next != NULL)												//If not, then check if the letter is present in the siblings node.
+					else if ((*root)->next != NULL)												//If the letter is not found in the child node, then check if the letter is present in the siblings node.
 					{
 						while ((*root)->next != NULL && (*root)->character != boggleBoard[i][j])//Loop through the siblings until the letter is found
 						{
@@ -277,7 +277,7 @@ void addLetterPrintWord(char8_t character, Trie** root)
 
 		wordsFound[wordIndex] = (char8_t*)malloc(letterIndex + 1);
 		strcpy_s(wordsFound[wordIndex], letterIndex + 1, lettersFound);
-		printedNodes[wordIndex] = (*root);									//Save the pointer of the node in an array. This array will be looped through and the boolean hasWordPrinted will be re-setted for the next game loop.
+		printedNodes[wordIndex] = (*root);														//Save the pointer of the node in an array. This array will be looped through and the boolean hasWordPrinted will be re-setted for the next game loop.
 		wordIndex++;
 
 		assert(wordIndex != MAX_WORDS_FOUND);
@@ -299,9 +299,9 @@ void removeLetter()
 
 void clearAllVisitedNodes()
 {
-	for (int i = 0; i < NUM_ROWS; i++)
+	for (uint32_t i = 0; i < NUM_ROWS; i++)
 	{
-		for (int j = 0; j < NUM_COLS; j++)
+		for (uint32_t j = 0; j < NUM_COLS; j++)
 		{
 			lettersVisited[i][j] = false;
 		}
@@ -322,15 +322,15 @@ int32_t rangedRandom(int32_t min, int32_t max)
 
 /*	Function: generateRandomCharacters
 *	-----------------------------------
-*	Description: For each position in the boggle board this function creates a random letter from the Dice of the position.
+*	Description: For each position in the boggle board this function creates a random letter from the Dice of that position.
 *	Parameters:
 *				boggleDices = pointer to the boggle dices array.
 *				boggleBoard = pointer to the boggle board array.
 */
 void generateRandomCharacters(char8_t **boggleDices, char8_t *boggleBoard)
 {
-	int randomNumber;
-	for (int i = 0; i < NUM_DICE; i++)
+	uint32_t randomNumber;
+	for (uint32_t i = 0; i < NUM_DICE; i++)
 	{
 		randomNumber = rangedRandom(0, SIDES_IN_DICE);
 		assert(randomNumber >= 0 && randomNumber < SIDES_IN_DICE);
@@ -348,9 +348,9 @@ void generateRandomCharacters(char8_t **boggleDices, char8_t *boggleBoard)
 void shuffleCharacterArray(char8_t *boggleBoard)
 {
 	char8_t tempCharacter;
-	int randomNumber;
+	uint32_t randomNumber;
 
-	for (int i = 0; i < NUM_DICE; i++)
+	for (uint32_t i = 0; i < NUM_DICE; i++)
 	{
 		randomNumber = rangedRandom(0, NUM_DICE);
 		assert(randomNumber >= 0 && randomNumber < NUM_DICE);
@@ -379,7 +379,7 @@ void finalizeGame(Trie** root)
 
 void freeAllFoundWords()
 {
-	for (int i = 0; i < wordIndex; i++)
+	for (uint32_t i = 0; i < wordIndex; i++)
 	{
 		free(wordsFound[i]);
 	}

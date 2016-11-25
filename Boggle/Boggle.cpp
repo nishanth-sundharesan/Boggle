@@ -28,8 +28,7 @@ int32_t main(int32_t argc, char8_t *argv[])
 	QueryPerformanceFrequency(&ticksPerSecond);
 
 	srand((unsigned int)time(&t));
-
-	//	topOfWordList = NULL;
+	
 	Trie* root;	
 	bool8_t done = parseDictionaryFile(fileName, &root);
 	int32_t gameCounter = 0;

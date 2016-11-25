@@ -2,15 +2,6 @@
 #define extern 
 #endif
 
-struct WordList
-{
-	char8_t *word;
-	struct WordList *nextWord;
-};
-typedef struct WordList wordListT;
-
-extern wordListT *topOfWordList;
-
 void initGame();
 void buildRandomBoard();
 int32_t rangedRandom(int32_t min, int32_t max);
@@ -22,8 +13,7 @@ void resetWordsFound();
 void finalizeGame(Trie** root);
 void generateRandomCharacters(char8_t **charArray, char8_t *displayedBoggleBoard);
 void shuffleCharacterArray(char8_t *displayedBoggleBoard);
-
-void searchWordsForTheLetter(int row, int col, Trie** root);
+void searchWordsForTheLetter(uint32_t row, uint32_t col, Trie** root);
 void clearAllVisitedNodes();
 void clearLetters();
 void removeLetter();

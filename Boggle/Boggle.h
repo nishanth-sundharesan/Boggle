@@ -1,5 +1,5 @@
 #define MAX_CHARS_IN_DICTIONARY_WORD 32
-#define BIG_BOGGLE 1
+#define BIG_BOGGLE 5
 #define SIDES_IN_DICE 6
 #define START_CHAR 'A'
 #define END_CHAR 'Z'

@@ -26,9 +26,9 @@ void addTrieNodes(char8_t *word, Trie* root)
 
 		if (root->children == NULL)											//If the children is NULL
 		{
-			Trie* node = createTrieNode(*word);							    //Then create a new Trie with with the character in it.
+			Trie* node = createTrieNode(*word);							    //Then create a new Trie with the character in it.
 
-			node->isChildNode = true;										//Make isChildNode as true. This will always be true inside this condition as we haven't traversed from the *next.
+			node->isChildNode = true;										//Make isChildNode as true. This will always be true inside this condition as we haven't traversed from the *next or through the sibling nodes.
 			node->parent = root;											//Assign it's parent node.
 
 			root->children = node;
@@ -41,7 +41,7 @@ void addTrieNodes(char8_t *word, Trie* root)
 
 			if (root->character != *word)									//Check if character or the letter is already present. If yes then skip the condition and continue with the next letter
 			{
-				while (root->next != NULL && root->character != *word)		//If not, then traverse through it's *next pointers until the node is the last node or the character is found
+				while (root->next != NULL && root->character != *word)		//If not, then traverse through it's *next pointers or siblings until the node is the last node or the character is found
 				{
 					root = root->next;
 				}
@@ -82,7 +82,7 @@ void deleteTrieNodes(Trie** root)
 			(*root) = (*root)->children;
 		}
 
-		while ((*root)->next != NULL)															//Traverse through the last child node using *next until it is the last node.
+		while ((*root)->next != NULL)															//Traverse through the last child node using *next(siblings) until it is the last node.
 		{
 			previousNode = (*root);
 			(*root) = (*root)->next;
