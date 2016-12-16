@@ -13,7 +13,7 @@ void resetWordsFound();
 void finalizeGame(Trie** root);
 void generateRandomCharacters(char8_t **charArray, char8_t *displayedBoggleBoard);
 void shuffleCharacterArray(char8_t *displayedBoggleBoard);
-void searchWordsForTheLetter(uint32_t row, uint32_t col, Trie** root);
+void searchWordsForTheLetter(int32_t row, int32_t col, Trie** root);
 void clearAllVisitedNodes();
 void clearLetters();
 void removeLetter();

@@ -28,8 +28,8 @@ char8_t boggleBoard[NUM_ROWS][NUM_COLS];
 char8_t* wordsFound[MAX_WORDS_FOUND];
 char8_t lettersFound[MAX_CHARS_IN_DICTIONARY_WORD];
 Trie* printedNodes[MAX_WORDS_FOUND];
-uint16_t letterIndex = 0;
-uint16_t wordIndex = 0;
+int32_t letterIndex = 0;
+int32_t wordIndex = 0;
 
 void resetGame()
 {
@@ -45,7 +45,7 @@ void resetGame()
 */
 void resetWordsFound()
 {
-	for (uint32_t i = 0; i < wordIndex; i++)
+	for (int32_t i = 0; i < wordIndex; i++)
 	{
 		printedNodes[i]->hasWordPrinted = false;
 	}
@@ -66,10 +66,10 @@ void printBoard()
 {
 #if DEBUG_PRINTING_ON
 	printf("======Boggle Board======\n\n");
-	for (uint32_t i = 0; i < NUM_ROWS; i++)
+	for (int32_t i = 0; i < NUM_ROWS; i++)
 	{
 		printf("\t");
-		for (uint32_t j = 0; j < NUM_COLS; j++)
+		for (int32_t j = 0; j < NUM_COLS; j++)
 		{
 			printf("%c ", boggleBoard[i][j]);
 		}
@@ -90,7 +90,7 @@ void printWords()
 	}
 	else
 	{
-		for (uint32_t i = 0; i < wordIndex; i++)
+		for (int32_t i = 0; i < wordIndex; i++)
 		{
 			printf("\n%s", wordsFound[i]);
 		}
@@ -109,9 +109,9 @@ void searchForWords(Trie* root)
 {
 	root = root->children;																//Traverse to the root's children
 	Trie* mainRoot = root;																//and save that first child.
-	for (uint32_t i = 0; i < NUM_ROWS; i++)												//Loop through the boggle board
+	for (int32_t i = 0; i < NUM_ROWS; i++)												//Loop through the boggle board
 	{
-		for (uint32_t j = 0; j < NUM_COLS; j++)
+		for (int32_t j = 0; j < NUM_COLS; j++)
 		{
 			if (boggleBoard[i][j] == root->character)									//If the letter in the board matches the node's letter
 			{
@@ -158,13 +158,13 @@ void searchForWords(Trie* root)
 *				col = The column index of the previously found letter.
 *				root = The child node of the previously found node.
 */
-void searchWordsForTheLetter(uint32_t row, uint32_t col, Trie** root)
+void searchWordsForTheLetter(int32_t row, int32_t col, Trie** root)
 {
-	for (uint32_t i = row - 1; i <= row + 1; i++)												//Check for all the surrounding letters from the found letter
+	for (int32_t i = row - 1; i <= row + 1; i++)												//Check for all the surrounding letters from the found letter
 	{
 		if (i >= 0 && i < NUM_ROWS)																//Check if it's a valid row index
 		{
-			for (uint32_t j = col - 1; j <= col + 1; j++)										//Check for all the surrounding letters from the found letter
+			for (int32_t j = col - 1; j <= col + 1; j++)										//Check for all the surrounding letters from the found letter
 			{
 				if (j >= 0 && j < NUM_COLS)														//Check if it's a valid column index
 				{
@@ -299,9 +299,9 @@ void removeLetter()
 
 void clearAllVisitedNodes()
 {
-	for (uint32_t i = 0; i < NUM_ROWS; i++)
+	for (int32_t i = 0; i < NUM_ROWS; i++)
 	{
-		for (uint32_t j = 0; j < NUM_COLS; j++)
+		for (int32_t j = 0; j < NUM_COLS; j++)
 		{
 			lettersVisited[i][j] = false;
 		}
@@ -329,8 +329,8 @@ int32_t rangedRandom(int32_t min, int32_t max)
 */
 void generateRandomCharacters(char8_t **boggleDices, char8_t *boggleBoard)
 {
-	uint32_t randomNumber;
-	for (uint32_t i = 0; i < NUM_DICE; i++)
+	int32_t randomNumber;
+	for (int32_t i = 0; i < NUM_DICE; i++)
 	{
 		randomNumber = rangedRandom(0, SIDES_IN_DICE);
 		assert(randomNumber >= 0 && randomNumber < SIDES_IN_DICE);
@@ -348,9 +348,9 @@ void generateRandomCharacters(char8_t **boggleDices, char8_t *boggleBoard)
 void shuffleCharacterArray(char8_t *boggleBoard)
 {
 	char8_t tempCharacter;
-	uint32_t randomNumber;
+	int32_t randomNumber;
 
-	for (uint32_t i = 0; i < NUM_DICE; i++)
+	for (int32_t i = 0; i < NUM_DICE; i++)
 	{
 		randomNumber = rangedRandom(0, NUM_DICE);
 		assert(randomNumber >= 0 && randomNumber < NUM_DICE);
@@ -379,7 +379,7 @@ void finalizeGame(Trie** root)
 
 void freeAllFoundWords()
 {
-	for (uint32_t i = 0; i < wordIndex; i++)
+	for (int32_t i = 0; i < wordIndex; i++)
 	{
 		free(wordsFound[i]);
 	}

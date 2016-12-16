@@ -62,7 +62,7 @@ bool8_t parseDictionaryFile(char8_t *fileName, Trie** root)
 bool8_t checkIfValidWord(char8_t word[])
 {
 	bool8_t isValidWord = true;
-	uint16_t letterCount = 0;
+	int32_t letterCount = 0;
 
 	while (true)
 	{
