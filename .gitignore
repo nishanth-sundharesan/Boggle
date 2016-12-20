@@ -1,9 +1,6 @@
 Boggle/Debug/
 Boggle/Release/
-Boggle.sln
 Boggle/Boggle.vcproj
-Boggle/Boggle.vcxproj
-Boggle/Boggle.vcxproj.filters
 Boggle/Boggle.vcxproj.user
 Debug/Boggle.exe
 Debug/Boggle.ilk
