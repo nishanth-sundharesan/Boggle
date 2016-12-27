@@ -15,16 +15,16 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Game.cpp">
+    <ClCompile Include="Boggle.c">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Boggle.cpp">
+    <ClCompile Include="Dictionary.c">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Dictionary.cpp">
+    <ClCompile Include="Game.c">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Trie.cpp">
+    <ClCompile Include="Trie.c">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -41,10 +41,10 @@
     <ClInclude Include="Game.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="types.h">
+    <ClInclude Include="Trie.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Trie.h">
+    <ClInclude Include="Types.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

@@ -104,10 +104,10 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Boggle.cpp" />
-    <ClCompile Include="Dictionary.cpp" />
-    <ClCompile Include="Game.cpp" />
-    <ClCompile Include="Trie.cpp" />
+    <ClCompile Include="Boggle.c" />
+    <ClCompile Include="Dictionary.c" />
+    <ClCompile Include="Game.c" />
+    <ClCompile Include="Trie.c" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Boggle.h" />
@@ -115,7 +115,7 @@
     <ClInclude Include="Dictionary.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="Trie.h" />
-    <ClInclude Include="types.h" />
+    <ClInclude Include="Types.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
