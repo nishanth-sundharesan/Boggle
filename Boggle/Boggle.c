@@ -60,9 +60,9 @@ int32_t main(int32_t argc, char8_t *argv[])
 		if (!done)
 			resetGame();
 #else 
+		timeToAverage[gameCounter++] = (float_t)timeInMilliseconds;
 		if (gameCounter < NUM_GAMES_TO_AVERAGE )
-		{
-			timeToAverage[gameCounter++] = (float_t)timeInMilliseconds;
+		{			
 			resetGame();
 		}
 		else
@@ -72,7 +72,7 @@ int32_t main(int32_t argc, char8_t *argv[])
 			{
 				average += timeToAverage[i];
 			}
-			average /= (float)NUM_GAMES_TO_AVERAGE;
+			average /= (float_t)NUM_GAMES_TO_AVERAGE;
 
 #if AVERAGE_PRINTING_ON
 			printf("\nThe average of the %d games was %2.4f milliseconds\n", NUM_GAMES_TO_AVERAGE, average);
