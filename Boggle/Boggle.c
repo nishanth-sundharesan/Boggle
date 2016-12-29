@@ -67,7 +67,7 @@ int32_t main(int32_t argc, char8_t *argv[])
 		}
 		else
 		{
-			float average = 0.0f;
+			float_t average = 0.0f;
 			for (int32_t i = 0; i < NUM_GAMES_TO_AVERAGE; ++i)
 			{
 				average += timeToAverage[i];
