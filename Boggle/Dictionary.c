@@ -1,5 +1,12 @@
 #define DICTIONARY_CPP
 
+/*
+* This program contains functions that,
+* 1. Opens the dictionary file and reads all the words present in that file.
+* 2. Checks if the word is valid.
+* 3. Creates Trie data structure for all the letters of the valid word.
+*/
+
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
@@ -57,7 +64,7 @@ bool8_t parseDictionaryFile(char8_t *fileName, Trie** root)
 *					c) The letters in the word must be more than the MAX_CHARS_IN_A_WORD. It's 4 in our program.
 *	Parameters:
 *				word = The word to be checked for validity.
-*	Returns:	Returns if the word is valid or invalid.
+*	Returns:	Returns true if the word is valid or false if invalid.
 */
 bool8_t checkIfValidWord(char8_t word[])
 {
