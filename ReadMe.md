@@ -12,9 +12,11 @@ This was part of the assignment at FIEA.
 
 The program currently displays the randomly generated board, words found in that board and the time it took to search for those words.
 
-To print the average time the program took to search the words for 'n' number of boards/games.
+To print the average time the program took to search the words for 'n' number of boards/games.  
+
 1. Set the #define "INPUT_NEEDED_TO_CONTINUE" to 0.  
 2. Set the number of games in the #define "NUM_GAMES_TO_AVERAGE".  
 3. Set the #define "DEBUG_PRINTING_ON" to 0.  
 4. Set the #define "AVERAGE_PRINTING_ON" to 1.  
+
 All these #defines are present in the file "Boggle.h"
