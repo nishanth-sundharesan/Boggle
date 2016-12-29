@@ -17,8 +17,8 @@ The graphical representation of the Trie data structure for the above mentioned 
 										
 1. \0 node will be the Root node.
 2. character = Each node will contain a character in it.
-3. hasWordEnded = This will be set to true for the last letter of each word.
-				  For example: The letter 'y' for the word amy will have the boolean 'hasWordEnded' set to true.
+3. hasWordEnded = This will be set to true for the last letter of every word.
+				  For example: The letter 'y' in the word amy will have the boolean 'hasWordEnded' set to true.
 4. hasWordPrinted = This boolean will be set to true if the word has already printed. We will need this boolean such that we don't
 					print the same word again while traversing upwards of the data structure.
 5. isChildNode = This will be set to true if the node is a child node, false otherwise.
@@ -43,7 +43,7 @@ The graphical representation of the Trie data structure for the above mentioned 
 			b) m = *parent will point to 'a'
 			c) y = *parent will point to 'm'
 
-			But consider the example 'and'
+			But for the example 'and'
 			a) a = *parent will point to '\0' or the root node
 			b) n = *parent will point to 'm'
 			c) d = *parent will point to 'n'

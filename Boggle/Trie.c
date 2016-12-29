@@ -26,7 +26,7 @@ void addTrieNodes(char8_t *word, Trie* root)
 
 		if (root->children == NULL)											//If the children is NULL
 		{
-			Trie* node = createTrieNode(*word);							    //Then create a new Trie with the character in it.
+			Trie* node = createTrieNode(*word);							    //Then create a new Trie node with the character in it.
 
 			node->isChildNode = true;										//Make isChildNode as true. This will always be true inside this condition as we haven't traversed from the *next or through the sibling nodes.
 			node->parent = root;											//Assign it's parent node.
@@ -48,7 +48,7 @@ void addTrieNodes(char8_t *word, Trie* root)
 
 				if (root->character != *word)								//If the character or letter is already present, then skip the condition and continue with the next letter
 				{
-					Trie* node = createTrieNode(*word);						//If not, then create a new Trie with with the character in it.
+					Trie* node = createTrieNode(*word);						//If not, then create a new Trie node with with the character in it.
 
 					node->isChildNode = false;								//Make isChildNode as false as the node is traversed from the *next.
 					node->parent = parentNode;								//Assign it's parent node.

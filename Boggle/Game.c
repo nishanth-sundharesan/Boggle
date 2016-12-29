@@ -18,10 +18,10 @@
 
 #if BIG_BOGGLE
 char8_t* boggleDices[NUM_DICE] = { DIE1 , DIE2 , DIE3 , DIE4 , DIE5 , DIE6 , DIE7, DIE8 , DIE9 , DIE10 , DIE11 , DIE12 , DIE13 , DIE14 , DIE15, DIE16 , DIE17 , DIE18 , DIE19 , DIE20 , DIE21 , DIE22 , DIE23 , DIE24 , DIE25 };
-bool8_t lettersVisited[NUM_ROWS][NUM_COLS] = { { false,false,false,false,false },{ false,false,false,false,false },{ false,false,false,false,false },{ false,false,false,false,false } };
+bool8_t lettersVisited[NUM_ROWS][NUM_COLS] = { { false, false, false, false, false },{ false, false, false, false, false },{ false, false, false, false, false },{ false, false, false, false, false } };
 #else
 char8_t* boggleDices[NUM_DICE] = { DIE1 , DIE2 , DIE3 , DIE4 , DIE5 , DIE6 , DIE7, DIE8 , DIE9 , DIE10 , DIE11 , DIE12 , DIE13 , DIE14 , DIE15, DIE16 };
-bool8_t lettersVisited[NUM_ROWS][NUM_COLS] = { {false,false,false,false},{ false,false,false,false },{ false,false,false,false },{ false,false,false,false } };
+bool8_t lettersVisited[NUM_ROWS][NUM_COLS] = { {false, false, false, false},{ false, false, false, false },{ false, false, false, false },{ false, false, false, false } };
 #endif
 
 char8_t boggleBoard[NUM_ROWS][NUM_COLS];
@@ -95,7 +95,7 @@ void printWords()
 			printf("\n%s", wordsFound[i]);
 		}
 	}
-	printf("\n=====================");
+	printf("\n=====================\n");
 #endif
 }
 
